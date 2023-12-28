@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7478824447806458642
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9
 --- !u!114 &-3511721584195351358
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -21,7 +34,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: VirusMat
-  m_Shader: {fileID: -6465566751694194690, guid: 42e00686bcd723448b035bec4fed710f, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0a2c7b9381bf2694a9e285b3efca22bf, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -31,11 +44,24 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Amplitude: 0.043
@@ -47,12 +73,14 @@ Material:
     - _FrequencyVariation: 1.5
     - _FresnelPower: 5
     - _NormalIntensity: 0.2
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _SineTime: 0.73
     - _SpeedH: 1
     - _TimeVar: 0
     m_Colors:
-    - _AlbedoColor: {r: 0.52201253, g: 0, b: 0.2042427, a: 0}
-    - _EmissiveColor: {r: 0.7106917, g: 2, b: 0.7106917, a: 0}
-    - _FresnelColor: {r: 2.3927736, g: 1.1666917, b: 0, a: 0}
+    - _AlbedoColor: {r: 0.61006284, g: 0.61006284, b: 0.61006284, a: 0}
+    - _EmissiveColor: {r: 1.8482075, g: 2.6232057, b: 0.2227246, a: 0}
+    - _FresnelColor: {r: 3.116943, g: 1.2341154, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
