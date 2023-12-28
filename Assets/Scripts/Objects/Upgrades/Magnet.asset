@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed9d85fa958a5b42979db859bcd9f75, type: 3}
+  m_Name: Magnet
+  m_EditorClassIdentifier: 
+  Name: Magnet
+  Cost: 50
+  Level: 0
+  CostMultiplier: 2
+  Icon: {fileID: 2383911795658866883, guid: 807469c193001af4184c16b1d7410cb0, type: 3}
+  Description: Attracts viruses and merges them automatically
+  CurrentEffect: 30
+  MultiplierEffect: 2

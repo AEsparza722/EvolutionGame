@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3511721584195351358
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VirusMat
+  m_Shader: {fileID: -6465566751694194690, guid: 42e00686bcd723448b035bec4fed710f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _Amplitude: 0.043
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _DisplacementAmount: 0.15
+    - _EmissiveIntensity: 1.1
+    - _FrequencyB: 0.854
+    - _FrequencyVariation: 1.5
+    - _FresnelPower: 5
+    - _NormalIntensity: 0.2
+    - _SineTime: 0.73
+    - _SpeedH: 1
+    - _TimeVar: 0
+    m_Colors:
+    - _AlbedoColor: {r: 0.52201253, g: 0, b: 0.2042427, a: 0}
+    - _EmissiveColor: {r: 0.7106917, g: 2, b: 0.7106917, a: 0}
+    - _FresnelColor: {r: 2.3927736, g: 1.1666917, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
