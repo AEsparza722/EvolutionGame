@@ -110,8 +110,8 @@ public class CharacterControler : MonoBehaviour
     private void OnMouseDrag()
     {        
         Vector2 mouseDrag = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDrag.x = Mathf.Clamp(mouseDrag.x, -9f, 9f);
-        mouseDrag.y = Mathf.Clamp(mouseDrag.y, -5.5f, 5.5f);
+        mouseDrag.x = Mathf.Clamp(mouseDrag.x, -4.45f, 4.45f);
+        mouseDrag.y = Mathf.Clamp(mouseDrag.y, -8.4f, 8.4f);
         Vector2 mouseOffset = mouseDrag - initialMousePosition;
         transform.position = initialObjectPosition + mouseOffset;           
     }
