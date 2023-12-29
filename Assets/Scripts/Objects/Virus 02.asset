@@ -16,7 +16,7 @@ MonoBehaviour:
   Health: 80
   Icon: {fileID: 648239232363735227, guid: da75b6bbeb3bb5e45b08349bd1fede83, type: 3}
   VirusMesh: {fileID: 4484643005846883149, guid: d2733ec37dba78f4c9b331b408a89b47, type: 3}
-  Speed: 2
+  Speed: 1
   VirusLevel: 2
   Damage: 10
   Coins: 2

@@ -27,7 +27,7 @@ public class SpawnMagnet : MonoBehaviour
     IEnumerator CreateMagnet()
     {
         canCreateMagnet = false;
-        Instantiate(MagnetSpawner, new Vector2(Random.Range(-7, 7), Random.Range(-3, 3)), Quaternion.identity, transform.parent);
+        Instantiate(MagnetSpawner, new Vector2(Random.Range(-4.45f, 4.45f), Random.Range(-8.4f, 8.4f)), Quaternion.identity, transform.parent);
         Debug.Log("Spawning Magnet");
         yield return new WaitForSeconds(cooldown - (Magnet.MultiplierEffect*Magnet.Level));
         canCreateMagnet = true;

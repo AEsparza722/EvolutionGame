@@ -1,7 +1,22 @@
-Diferentes virus y evoluciones	
+Poderes:	
+	Atraccion
+	Los destruye
+	Tentaculo (laser)
 
-Forma de spawnearlos
+Spawn en base a numero de monedas totales
+Los virus lo persiguen
+El jefe se va moviendo por la pantalla
 
-Sistema para combinar y evolucionar
+Arreglar 
+	Iman con boss no funciona y desactiva rigid body
 
-Puntos o monedas
+Siguiente clase:
+	Aumentar nivel del boss
+	Agregar ataques
+	Feedback de danio
+
+Hacer el fin:
+	Interfaz
+	Graficos
+	Colores
+	VFX de ataque o danio

@@ -45,6 +45,12 @@ public class CharacterControler : MonoBehaviour
             StartCoroutine(DropCoins());
         }
 
+        if (BossSystem.instance.currentBoss != null)
+        {
+            canMove = false;
+            MoveToBoss();
+        }
+
         //Rotation
         // Generate random rotation for each axis
         Quaternion randomRotation = Quaternion.Euler(
@@ -73,14 +79,33 @@ public class CharacterControler : MonoBehaviour
                 
     }
 
+    void MoveToBoss()
+    {
+        movementDirection = (BossSystem.instance.currentBoss.transform.position - transform.position).normalized;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
+
+
+    }
+
     IEnumerator DropCoins ()
     {
-        canIncreaseCoins = false;                
+        canIncreaseCoins = false;
         yield return new WaitForSeconds(5);
         GameManager.instance.UpdateCoins(virusData.Coins);
+        BossSystem.instance.IncreaseScore(virusData.Coins);
         coinsText.text = "+ " + virusData.Coins.ToString();
         TextAnimation();
         canIncreaseCoins = true;
+
+        if (BossSystem.instance.currentBoss != null)
+        {
+            if ((BossSystem.instance.currentBoss.transform.position - transform.position).magnitude <= 3f)
+            {
+                BossSystem.instance.takeDamage(virusData.Damage);
+            }
+        }
+
     }
 
     void TextAnimation()
@@ -100,7 +125,7 @@ public class CharacterControler : MonoBehaviour
         //gameObject.GetComponent<SpriteRenderer>().sprite = virusData.Icon;
 
         //Mesh
-        gameObject.GetComponent<MeshFilter>().mesh = virusData.VirusMesh;
+        gameObject.GetComponentInChildren<MeshFilter>().mesh = virusData.VirusMesh;
 
         //Particle
         fusionParticle.Play();
