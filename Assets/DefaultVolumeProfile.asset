@@ -232,7 +232,7 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.02
+    m_Value: 1.13
   intensity:
     m_OverrideState: 1
     m_Value: 3.96
@@ -246,7 +246,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   downscale:
     m_OverrideState: 1
@@ -288,7 +288,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 9.6
 --- !u!114 &-4628848007532179595
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -349,7 +349,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.423
+    m_Value: 0.298
   smoothness:
     m_OverrideState: 1
     m_Value: 0.2
@@ -371,7 +371,7 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   gaussianStart:
     m_OverrideState: 1
     m_Value: 10
@@ -389,19 +389,19 @@ MonoBehaviour:
     m_Value: 0.1
   aperture:
     m_OverrideState: 1
-    m_Value: 5.6
+    m_Value: 4.9
   focalLength:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 8
   bladeCount:
     m_OverrideState: 1
     m_Value: 5
   bladeCurvature:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.58
   bladeRotation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -61
 --- !u!114 &-1125638141830930296
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -641,13 +641,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.994369, z: 0.926425, w: 0}
+    m_Value: {x: 0.57596123, y: 0.59816855, z: 1, w: 0}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 0.2288453, y: 1, z: 0.5520596, w: 0.27384338}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 0.7046193, z: 0.9233342, w: 0.31161478}
   shadowsStart:
     m_OverrideState: 1
     m_Value: 0
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd486065ce11414fa40e631affc4900, type: 3}
   m_Name: ProbeVolumesOptions
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   normalBias:
     m_OverrideState: 1
     m_Value: 0.33

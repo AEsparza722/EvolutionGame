@@ -11,7 +11,6 @@ public class BossController : MonoBehaviour
     public Rigidbody2D rb;
     public CircleCollider2D circleCollider;
     bool canChangeDirection = true;
-    bool canIncreaseCoins = true;
     public bool canMove = true;
     public BossData bossData;
     [SerializeField] ParticleSystem fusionParticle;

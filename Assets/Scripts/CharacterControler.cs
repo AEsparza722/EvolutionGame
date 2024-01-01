@@ -18,13 +18,14 @@ public class CharacterControler : MonoBehaviour
     [SerializeField] TMP_Text coinsText;
     int health;
 
+ 
     [SerializeField] float rotationSpeed = 10f;
-    [SerializeField] float rotationMultiplier = 200f;
+    [SerializeField] float rotationMultiplier = 500f;
 
     private void Awake()
     {
         circleCollider = GetComponent<CircleCollider2D>();
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();        
                 
     }
 
@@ -52,19 +53,22 @@ public class CharacterControler : MonoBehaviour
         }
 
         //Rotation
-        // Generate random rotation for each axis
-        Quaternion randomRotation = Quaternion.Euler(
-            movementDirection.x * rotationMultiplier, // Random rotation on X axis
-            movementDirection.y * rotationMultiplier, // Random rotation on Y axis
-            movementDirection.x * rotationMultiplier  // Random rotation on Z axis
+        Quaternion rotationDir = Quaternion.Euler(
+            movementDirection.x * rotationMultiplier, 
+            movementDirection.y * rotationMultiplier, 
+            movementDirection.x * rotationMultiplier  
         );
 
         // Apply the rotation gradually over time
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation,
-            randomRotation,
+            rotationDir,
             rotationSpeed * Time.deltaTime
         );
+
+        //Rotate text to camera
+         coinsText.transform.LookAt(Camera.main.transform.position);
+
 
     }
 
@@ -112,7 +116,8 @@ public class CharacterControler : MonoBehaviour
     {
         LeanTween.scale(coinsText.rectTransform, new Vector3(1, 1, 1), .3f).setEase(LeanTweenType.easeInOutSine).setOnComplete(() => { LeanTween.scale(coinsText.rectTransform, new Vector3(0, 0, 0), .3f).setEase(LeanTweenType.easeInOutSine).setDelay(.3f); });
     }
- 
+
+
     public void UpdateVirusData()
     {
         //Name

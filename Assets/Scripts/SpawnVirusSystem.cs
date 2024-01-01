@@ -7,12 +7,13 @@ public class SpawnVirusSystem : MonoBehaviour
     bool canCreateSpawner = true;
     [SerializeField] GameObject VirusSpawner;
     [SerializeField] int cooldown;
+    
 
     private void Update()
     {
         if (canCreateSpawner)
         {
-            StartCoroutine(CreateSpawner());
+            StartCoroutine(CreateSpawner());            
         }
         
     }

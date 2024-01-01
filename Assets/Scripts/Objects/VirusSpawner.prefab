@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virusPrefab: {fileID: 8789001809645850492, guid: 66db3ca2abdb3574cac11fc620915122, type: 3}
+  destroySpawnerAfter: 10
 --- !u!61 &5391707438725733414
 BoxCollider2D:
   m_ObjectHideFlags: 0

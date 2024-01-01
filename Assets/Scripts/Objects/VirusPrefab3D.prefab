@@ -5273,5 +5273,5 @@ MonoBehaviour:
   virusData: {fileID: 11400000, guid: 48ed6d8ba2d19d847905b9d5ba34411e, type: 2}
   fusionParticle: {fileID: 8907121694420923660}
   coinsText: {fileID: 8233543884152971306}
-  rotationSpeed: 10
-  rotationMultiplier: 200
+  rotationSpeed: 50
+  rotationMultiplier: 1000
