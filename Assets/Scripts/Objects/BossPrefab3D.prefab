@@ -293,7 +293,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f403d1295b987847bdc025e8c732596, type: 2}
+  - {fileID: 2100000, guid: 0b4efc43ae4ca5d46af6fe582221fed3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5273,5 +5273,6 @@ MonoBehaviour:
   bossData: {fileID: 11400000, guid: 6d273522410612c4096f40a6cf76f497, type: 2}
   fusionParticle: {fileID: 8907121694420923660}
   coinsText: {fileID: 8233543884152971306}
+  health: 0
   rotationSpeed: 10
   rotationMultiplier: 200

@@ -33,7 +33,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VirusMat
+  m_Name: BossMat
   m_Shader: {fileID: -6465566751694194690, guid: 0a2c7b9381bf2694a9e285b3efca22bf, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -67,13 +67,13 @@ Material:
     - _Amplitude: 0.043
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _BlendingOpacity: 0.53
+    - _BlendingOpacity: 1
     - _DisplacementAmount: 0.15
     - _EmissiveIntensity: 0.24
     - _FrequencyB: 0.854
     - _FrequencyVariation: 1.5
-    - _FresnelPower: 2
-    - _Max: 1
+    - _FresnelPower: 2.24
+    - _Max: 2
     - _Min: 0.2
     - _NormalIntensity: 0.46
     - _QueueControl: 0
@@ -82,9 +82,9 @@ Material:
     - _SpeedH: 1
     - _TimeVar: 0
     m_Colors:
-    - _AlbedoColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+    - _AlbedoColor: {r: 2.1747942, g: 0, b: 0, a: 0}
     - _BColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 0}
     - _EmissiveColor: {r: 1.8482077, g: 2.623206, b: 0.22272463, a: 0}
-    - _FresnelColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+    - _FresnelColor: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

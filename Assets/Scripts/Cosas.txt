@@ -17,6 +17,5 @@ Siguiente clase:
 
 Hacer el fin:
 	Interfaz
-	Graficos
-	Colores
+	Graficos	
 	VFX de ataque o danio
