@@ -49,13 +49,13 @@ public class UpgradeController : MonoBehaviour
         if (isMenuActive) 
         {
             //upgradeMenu.SetActive(false);
-            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), 1007, .5f);
+            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), -971.4f, .5f); //initial pos
             isMenuActive = false;
         }
         else
         {
             //upgradeMenu.SetActive(true);
-            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), 107.9353f, .5f);
+            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), -575f, .5f); //open pos
             isMenuActive = true;
         }
         
@@ -71,14 +71,14 @@ public class UpgradeController : MonoBehaviour
             upgradeInstance.transform.GetChild(0).GetComponent<Image>().sprite = upgradeItem.Icon;
             upgradeInstance.transform.GetChild(1).GetComponent<TMP_Text>().text = upgradeItem.Name;
             upgradeInstance.transform.GetChild(2).GetComponent<TMP_Text>().text = upgradeItem.Description;
-            upgradeInstance.transform.GetChild(3).GetChild(0).GetComponent<TMP_Text>().text = upgradeItem.Cost.ToString();
+            upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = upgradeItem.Cost.ToString();
             
             //Agregar casos por cada upgrade por nombre
             switch (upgradeItem.Name)
             {
                 case "Magnet":
-                    upgradeInstance.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => UpgradeMagnet(upgradeItem));
-                    upgradeInstance.transform.GetChild(3).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
+                    upgradeInstance.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => UpgradeMagnet(upgradeItem));
+                    upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
                     break;                
             }
         }
@@ -92,7 +92,7 @@ public class UpgradeController : MonoBehaviour
             {
                 if (container.transform.GetChild(i).name == upgradeList[j].Name)
                 {
-                    container.transform.GetChild(i).GetChild(3).GetChild(0).GetComponent<TMP_Text>().text = (upgradeList[j].Cost + (upgradeList[j].Cost * upgradeList[j].Level)).ToString();
+                    container.transform.GetChild(i).GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeList[j].Cost + (upgradeList[j].Cost * upgradeList[j].Level)).ToString();
                 }
             }
         }

@@ -16,7 +16,7 @@ MonoBehaviour:
   Cost: 50
   Level: 0
   CostMultiplier: 2
-  Icon: {fileID: 2383911795658866883, guid: 807469c193001af4184c16b1d7410cb0, type: 3}
-  Description: Attracts viruses and merges them automatically
+  Icon: {fileID: 1535325516486818496, guid: 8903df8841dd6ff468936f7fbfb74be6, type: 3}
+  Description: 
   CurrentEffect: 30
   MultiplierEffect: 2
