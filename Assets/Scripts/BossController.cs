@@ -107,8 +107,7 @@ public class BossController : MonoBehaviour
     {        
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRadius);        
         viruses.Clear();
-        canAttack = false;
-
+        canAttack = false;       
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject.CompareTag("Virus"))
@@ -140,7 +139,8 @@ public class BossController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
-        Gizmos.color = Color.yellow;
+        
     }
 }
