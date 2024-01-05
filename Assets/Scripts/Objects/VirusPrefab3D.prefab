@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1568484453884614037}
   - component: {fileID: 2105770299700257344}
   - component: {fileID: 8233543884152971306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CoinsDropText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4535659238682203654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2832112421618998380}
   - component: {fileID: 2895017473857137252}
   - component: {fileID: 6797214395681354102}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 987212257561257966}
   - component: {fileID: 7505762665396016965}
   - component: {fileID: 7509656989501588737}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 7106687262430618447}
   - component: {fileID: 8907121694420923660}
   - component: {fileID: 6184478917802089761}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5167,7 +5167,7 @@ GameObject:
   - component: {fileID: 3834150327661469008}
   - component: {fileID: 1531215598788425186}
   - component: {fileID: 7522408184341903650}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: VirusPrefab3D
   m_TagString: Virus
   m_Icon: {fileID: 0}
@@ -5274,4 +5274,4 @@ MonoBehaviour:
   fusionParticle: {fileID: 8907121694420923660}
   coinsText: {fileID: 8233543884152971306}
   rotationSpeed: 50
-  rotationMultiplier: 1000
+  rotationMultiplier: 500

@@ -17,7 +17,7 @@ public class SpawnMagnet : MonoBehaviour
     private void Update()
     {
         cooldown = Magnet.CurrentEffect;
-        if (canCreateMagnet && CanSpawnMagnet())
+        if (canCreateMagnet && CanSpawnMagnet() && BossSystem.instance.currentBoss == null)
         {
             StartCoroutine(CreateMagnet());
         }

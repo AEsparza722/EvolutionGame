@@ -5169,7 +5169,7 @@ GameObject:
   - component: {fileID: 3307855209726353004}
   m_Layer: 0
   m_Name: BossPrefab3D
-  m_TagString: Virus
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5274,5 +5274,6 @@ MonoBehaviour:
   fusionParticle: {fileID: 8907121694420923660}
   coinsText: {fileID: 8233543884152971306}
   health: 0
+  attackRadius: 4
   rotationSpeed: 10
   rotationMultiplier: 200

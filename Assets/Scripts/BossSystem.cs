@@ -12,6 +12,7 @@ public class BossSystem : MonoBehaviour
     public GameObject currentBoss;
     BossController bossController;
 
+
     private void Awake()
     {
         if (instance == null)
@@ -22,6 +23,8 @@ public class BossSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        
     }
 
     private void Update()
@@ -53,7 +56,8 @@ public class BossSystem : MonoBehaviour
     public void takeDamage(int damage)
     {
         bossController.health -= damage;
-        Debug.Log(bossController.health);
+                
+        //Debug.Log(bossController.health);
         if (bossController.health <= 0)
         {
             Destroy(currentBoss.gameObject);

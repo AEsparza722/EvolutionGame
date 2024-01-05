@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -12,14 +13,19 @@ public class BossController : MonoBehaviour
     public CircleCollider2D circleCollider;
     bool canChangeDirection = true;
     public bool canMove = true;
+    bool canAttack = true;
     public BossData bossData;
     [SerializeField] ParticleSystem fusionParticle;
     [SerializeField] TMP_Text coinsText;
     public int health;
-
-
+    public int damage;
+    [SerializeField] float attackRadius = 3f;
     [SerializeField] float rotationSpeed = 10f;
-    [SerializeField] float rotationMultiplier = 200f;
+    [SerializeField] float rotationMultiplier = 200f;    
+
+    List<GameObject> viruses = new List<GameObject>();
+    GameObject virusFocus;
+    [SerializeField] float cooldownBasicAttack = 3f;
 
     private void Awake()
     {
@@ -40,6 +46,13 @@ public class BossController : MonoBehaviour
             StartCoroutine(MoveCharacter());
         }
 
+        if (canAttack)
+        {
+            StartCoroutine(BasicAttack());
+        }
+        
+            
+        
 
 
         //Rotation
@@ -56,7 +69,6 @@ public class BossController : MonoBehaviour
             randomRotation,
             rotationSpeed * Time.deltaTime
         );
-
     }
 
     IEnumerator MoveCharacter()
@@ -69,8 +81,6 @@ public class BossController : MonoBehaviour
         canChangeDirection = true;
 
     }
-
-
     public void UpdateBossData()
     {
         //Name
@@ -78,6 +88,9 @@ public class BossController : MonoBehaviour
 
         //Health
         health = bossData.Health;
+
+        //Damage
+        damage = bossData.Damage;
 
         //Icon
         //gameObject.GetComponent<SpriteRenderer>().sprite = virusData.Icon;
@@ -88,5 +101,46 @@ public class BossController : MonoBehaviour
         //Particle
         fusionParticle.Play();
 
+    }
+
+    IEnumerator BasicAttack()
+    {        
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRadius);        
+        viruses.Clear();
+        canAttack = false;
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject.CompareTag("Virus"))
+            {
+                viruses.Add(colliders[i].gameObject); 
+            }
+        }
+        if (virusFocus == null && viruses.Count > 0)
+        {
+            virusFocus = viruses[0];
+            virusFocus.GetComponent<CharacterControler>().takeDamage(damage);
+            StartCoroutine(PostProcess.instance.DamagePostProcess(.5f)); //DamagePost process
+            ShakeCamera.instance.ShakeCam(2, .5f); //Shake camera, cambiar a viruses
+        }
+        else
+        {
+            if (viruses.Contains(virusFocus))
+            {
+                virusFocus.GetComponent<CharacterControler>().takeDamage(damage);
+                StartCoroutine(PostProcess.instance.DamagePostProcess(.5f)); //DamagePost process
+                ShakeCamera.instance.ShakeCam(2, .5f); //Shake camera, cambiar a viruses
+            }
+        }
+
+       yield return new WaitForSeconds(cooldownBasicAttack);
+        canAttack = true;
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.color = Color.yellow;
     }
 }

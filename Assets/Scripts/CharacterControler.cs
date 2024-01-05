@@ -102,11 +102,12 @@ public class CharacterControler : MonoBehaviour
         TextAnimation();
         canIncreaseCoins = true;
 
+    //Attack boss
         if (BossSystem.instance.currentBoss != null)
         {
             if ((BossSystem.instance.currentBoss.transform.position - transform.position).magnitude <= 3f)
             {
-                BossSystem.instance.takeDamage(virusData.Damage);
+                BossSystem.instance.takeDamage(virusData.Damage);                
             }
         }
 
@@ -114,7 +115,7 @@ public class CharacterControler : MonoBehaviour
 
     void TextAnimation()
     {
-        LeanTween.scale(coinsText.rectTransform, new Vector3(1, 1, 1), .3f).setEase(LeanTweenType.easeInOutSine).setOnComplete(() => { LeanTween.scale(coinsText.rectTransform, new Vector3(0, 0, 0), .3f).setEase(LeanTweenType.easeInOutSine).setDelay(.3f); });
+        LeanTween.scale(coinsText.rectTransform, new Vector3(-1, 1, 1), .3f).setEase(LeanTweenType.easeInOutSine).setOnComplete(() => { LeanTween.scale(coinsText.rectTransform, new Vector3(0, 0, 0), .3f).setEase(LeanTweenType.easeInOutSine).setDelay(.3f); });
     }
 
 
@@ -182,5 +183,17 @@ public class CharacterControler : MonoBehaviour
         }
 
 
+    }
+
+    public void takeDamage(int damage)
+    {
+        health -= damage;        
+        Debug.Log(health);
+        
+        
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

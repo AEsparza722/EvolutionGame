@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Virus
+  - Boss
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Virus
   - Water
   - UI
   - 

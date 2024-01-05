@@ -1,7 +1,9 @@
 Poderes:	
-	Atraccion
-	Los destruye
+	Empuje
+	Golpe a uno al azar
 	Tentaculo (laser)
+
+	Camera shake, cambio de color al virus que ataca, que lo empuje
 
 Spawn en base a numero de monedas totales
 Los virus lo persiguen
@@ -16,6 +18,6 @@ Siguiente clase:
 	Feedback de danio
 
 Hacer el fin:
-	Interfaz
-	Graficos	
+	
+	Modelos de virus	
 	VFX de ataque o danio
