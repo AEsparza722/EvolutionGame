@@ -5192,7 +5192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredScore: 10
-  BossPrefab: {fileID: 8789001809645850492, guid: eacbc56d6ee31f5429430b2dab1dbbc6, type: 3}
+  BossPrefab: {fileID: 8789001809645850492, guid: 3b0c602c9ddbc5042825fd5ed5daeb4e, type: 3}
   currentBoss: {fileID: 0}
 --- !u!4 &260182495
 Transform:

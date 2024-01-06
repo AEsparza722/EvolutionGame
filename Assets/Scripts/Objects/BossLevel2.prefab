@@ -5166,9 +5166,9 @@ GameObject:
   - component: {fileID: 8747728873195805220}
   - component: {fileID: 3834150327661469008}
   - component: {fileID: 1531215598788425186}
-  - component: {fileID: 3307855209726353004}
+  - component: {fileID: -591189488600840444}
   m_Layer: 0
-  m_Name: BossPrefab3D
+  m_Name: BossLevel2
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5255,7 +5255,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &3307855209726353004
+--- !u!114 &-591189488600840444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5264,16 +5264,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8789001809645850492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522fe5efca72d214c8018927e308958f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c602aff7c61bbf4495bf9455635210a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1531215598788425186}
   circleCollider: {fileID: 3834150327661469008}
   canMove: 1
-  bossData: {fileID: 11400000, guid: 6d273522410612c4096f40a6cf76f497, type: 2}
-  fusionParticle: {fileID: 8907121694420923660}
-  coinsText: {fileID: 8233543884152971306}
-  health: 0
-  attackRadius: 4
   rotationSpeed: 10
   rotationMultiplier: 200
+  attackRadius: 4
+  cooldownBasicAttack: 3
+  damage: 20
+  health: 100
+  speed: 2000
+  fusionParticle: {fileID: 0}

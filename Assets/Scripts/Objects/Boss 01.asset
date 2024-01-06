@@ -18,5 +18,5 @@ MonoBehaviour:
   VirusMesh: {fileID: 974210487669270974, guid: d9c0af3b02b0a5348b290ca1c39cb873, type: 3}
   Speed: 2000
   VirusLevel: 0
-  Damage: 100
+  Damage: 10
   Coins: 50

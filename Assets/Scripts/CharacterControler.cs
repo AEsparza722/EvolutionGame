@@ -13,10 +13,12 @@ public class CharacterControler : MonoBehaviour
     bool canChangeDirection = true;
     bool canIncreaseCoins = true;
     public bool canMove = true;
+    bool isKnockback;
     public VirusData virusData;
     [SerializeField] ParticleSystem fusionParticle;
     [SerializeField] TMP_Text coinsText;
     int health;
+    MeshRenderer meshRenderer;
 
  
     [SerializeField] float rotationSpeed = 10f;
@@ -25,7 +27,8 @@ public class CharacterControler : MonoBehaviour
     private void Awake()
     {
         circleCollider = GetComponent<CircleCollider2D>();
-        rb = GetComponent<Rigidbody2D>();        
+        rb = GetComponent<Rigidbody2D>();    
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
                 
     }
 
@@ -85,10 +88,14 @@ public class CharacterControler : MonoBehaviour
 
     void MoveToBoss()
     {
-        movementDirection = (BossSystem.instance.currentBoss.transform.position - transform.position).normalized;
-        rb.velocity = Vector2.zero;
-        rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
-
+        
+            movementDirection = (BossSystem.instance.currentBoss.transform.position - transform.position).normalized;
+            
+        if (!isKnockback)
+        {
+            rb.velocity = Vector2.zero;
+            rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
+        }
 
     }
 
@@ -185,15 +192,36 @@ public class CharacterControler : MonoBehaviour
 
     }
 
-    public void takeDamage(int damage)
+    public void takeDamage(int damage, float force)
     {
-        health -= damage;        
+        health -= damage;
+        
         Debug.Log(health);
-        
-        
+
+        StartCoroutine(ChangeColorDamage());
+        StartCoroutine(KnockBack(force));
+
         if (health <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator ChangeColorDamage()
+    {
+        Color defaultColor = meshRenderer.material.GetColor("_FresnelColor");
+
+        meshRenderer.material.SetColor("_FresnelColor", Color.red);
+        yield return new WaitForSeconds(.5f);
+
+        meshRenderer.material.SetColor("_FresnelColor", defaultColor);
+    }
+
+    IEnumerator KnockBack (float force)
+    {
+        isKnockback = true;
+        rb.AddForce(-movementDirection * (virusData.Speed * force), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(.2f);
+        isKnockback = false;
     }
 }

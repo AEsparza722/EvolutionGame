@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Virus
   - Boss
+  - Spawner
   layers:
   - Default
   - TransparentFX
