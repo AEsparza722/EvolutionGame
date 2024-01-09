@@ -40,7 +40,7 @@ public class BossController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    protected void UpdateBoss()
+    public virtual void UpdateBoss()
     {
         if (canChangeDirection && canMove)
         {
@@ -114,7 +114,7 @@ public class BossController : MonoBehaviour
     protected List<GameObject> GetVirusInRange(float range)
     {
         List<GameObject> virusInRange = new List<GameObject>();
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, attackRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range);
         virusInRange.Clear();        
 
         for (int i = 0; i < colliders.Length; i++)

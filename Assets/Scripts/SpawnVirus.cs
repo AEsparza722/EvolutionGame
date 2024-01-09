@@ -26,7 +26,7 @@ public class SpawnVirus : MonoBehaviour
     void DestroySpawner()
     {
         Destroy(gameObject);
-        Debug.Log("Spawner expired");
+        //Debug.Log("Spawner expired");
     }
 
 }

@@ -20,7 +20,9 @@ public class CharacterControler : MonoBehaviour
     int health;
     MeshRenderer meshRenderer;
 
- 
+    Color defaultColor;
+
+
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
 
@@ -35,6 +37,7 @@ public class CharacterControler : MonoBehaviour
     private void Start()
     {
         UpdateVirusData();
+        defaultColor = meshRenderer.material.GetColor("_FresnelColor");
     }
 
     private void Update()
@@ -196,7 +199,7 @@ public class CharacterControler : MonoBehaviour
     {
         health -= damage;
         
-        Debug.Log(health);
+        //Debug.Log(health);
 
         StartCoroutine(ChangeColorDamage());
         StartCoroutine(KnockBack(force));
@@ -209,11 +212,8 @@ public class CharacterControler : MonoBehaviour
 
     IEnumerator ChangeColorDamage()
     {
-        Color defaultColor = meshRenderer.material.GetColor("_FresnelColor");
-
         meshRenderer.material.SetColor("_FresnelColor", Color.red);
-        yield return new WaitForSeconds(.5f);
-
+        yield return new WaitForSeconds(.3f);
         meshRenderer.material.SetColor("_FresnelColor", defaultColor);
     }
 

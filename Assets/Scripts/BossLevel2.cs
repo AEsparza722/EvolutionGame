@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossLevel2 : BossLevel1
 {
+    [Header("Level 2")]
     bool canPushAttack = true;
     private void Awake()
     {
@@ -12,11 +13,7 @@ public class BossLevel2 : BossLevel1
 
     private void Update()
     {
-        UpdateBoss();
-        if (canPushAttack)
-        {
-            StartCoroutine(PushAttack());
-        }
+        UpdateBoss();       
         
     }
 
@@ -36,5 +33,14 @@ public class BossLevel2 : BossLevel1
 
     }
 
-    
+    public override void UpdateBoss()
+    {
+        base.UpdateBoss();
+        if (canPushAttack)
+        {
+            StartCoroutine(PushAttack());
+        }
+    }
+
+
 }
