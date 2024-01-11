@@ -47,7 +47,7 @@ public class BossSystem : MonoBehaviour
 
     void SpawnBoss()
     {        
-        currentBoss = Instantiate(BossPrefab, new Vector2(Random.Range(-4.45f, 4.45f), Random.Range(-8.4f, 8.4f)), Quaternion.identity, transform.parent);
+        currentBoss = Instantiate(BossPrefab, new Vector2(Random.Range(-35f, 35f), Random.Range(-35f, 35f)), Quaternion.identity, transform.parent);
         bossController = currentBoss.GetComponent<BossController>();
         currentScore = 0;
     }

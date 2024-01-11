@@ -6,7 +6,7 @@ public class SpawnVirusSystem : MonoBehaviour
 {
     bool canCreateSpawner = true;
     [SerializeField] GameObject VirusSpawner;
-    [SerializeField] int cooldown;
+    [SerializeField] float cooldown;
     
 
     private void Update()
@@ -20,7 +20,7 @@ public class SpawnVirusSystem : MonoBehaviour
     IEnumerator CreateSpawner()
     {
         canCreateSpawner = false;
-        Instantiate(VirusSpawner, new Vector2(Random.Range(-4.45f, 4.45f), Random.Range(-8.4f, 8.4f)), Quaternion.identity, transform.parent);
+        Instantiate(VirusSpawner, new Vector2(Random.Range(-40f, 40f), Random.Range(-40f, 40f)), Quaternion.identity, transform.parent);
         yield return new WaitForSeconds(cooldown);
         canCreateSpawner = true;
     }

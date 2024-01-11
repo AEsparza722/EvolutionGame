@@ -26,17 +26,24 @@ public class PostProcess : MonoBehaviour
 
     public void PostProcessDefault()
     {
-        vignetteDamage.color.value = Color.black;
-        vignetteDamage.intensity.value = .3f;
-        vignetteDamage.smoothness.value = .2f;
+        if (vignetteDamage != null)
+        {
+            vignetteDamage.color.value = Color.black;
+            vignetteDamage.intensity.value = .3f;
+            vignetteDamage.smoothness.value = .2f;
+        }
+        
     }
 
     public IEnumerator DamagePostProcess(float seconds)
     {
-
-        vignetteDamage.color.value = Color.red;
-        vignetteDamage.intensity.value = .45f;
-        vignetteDamage.smoothness.value = .215f;
+        if (vignetteDamage != null)
+        {
+            vignetteDamage.color.value = Color.red;
+            vignetteDamage.intensity.value = .45f;
+            vignetteDamage.smoothness.value = .215f;
+        }
+        
         yield return new WaitForSeconds(seconds);
         PostProcessDefault();
 
