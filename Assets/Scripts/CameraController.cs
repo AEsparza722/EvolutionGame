@@ -51,8 +51,8 @@ public class CameraController : MonoBehaviour
             differenceOfMovement = originOfMovement - Camera.main.ScreenToWorldPoint(Input.mousePosition);
             tempPosition = cameraControl.transform.position + differenceOfMovement;
 
-            tempPosition.x = Mathf.Clamp(tempPosition.x, -45, 45);
-            tempPosition.y = Mathf.Clamp(tempPosition.y, -45, 45);
+            tempPosition.x = Mathf.Clamp(tempPosition.x, -GameManager.instance.gameArea.x /2, GameManager.instance.gameArea.x /2);
+            tempPosition.y = Mathf.Clamp(tempPosition.y, -GameManager.instance.gameArea.y /2, GameManager.instance.gameArea.y / 2);
 
             cameraControl.transform.position = tempPosition;
         

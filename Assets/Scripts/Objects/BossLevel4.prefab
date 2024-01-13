@@ -293,7 +293,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1f41e4967dfffe4598d1c2c198f75a6, type: 2}
+  - {fileID: 2100000, guid: c77aa53e2a246604297a81472fe301c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5166,9 +5166,10 @@ GameObject:
   - component: {fileID: 8747728873195805220}
   - component: {fileID: 3834150327661469008}
   - component: {fileID: 1531215598788425186}
-  - component: {fileID: -591189488600840444}
+  - component: {fileID: -7354628797899082131}
+  - component: {fileID: 8673609647977535878}
   m_Layer: 0
-  m_Name: BossLevel2
+  m_Name: BossLevel4
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5255,7 +5256,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &-591189488600840444
+--- !u!114 &-7354628797899082131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5264,7 +5265,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8789001809645850492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c602aff7c61bbf4495bf9455635210a, type: 3}
+  m_Script: {fileID: 11500000, guid: 78cab704f3df6534594f443720ebcc9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1531215598788425186}
@@ -5276,5 +5277,39 @@ MonoBehaviour:
   cooldownBasicAttack: 3
   damage: 20
   health: 100
+  speed: 1000
+  fusionParticle: {fileID: 0}
+  bulletPrefab: {fileID: 6257437744043543912, guid: 56b441908f503c147bdc65e44214e4d2, type: 3}
+  longRange: 10
+  cooldownShoot: 10
+  bulletSpeed: 15
+  virusLongRange: []
+--- !u!114 &8673609647977535878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8789001809645850492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c03537728e1b540932007fca63207b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1531215598788425186}
+  circleCollider: {fileID: 3834150327661469008}
+  canMove: 1
+  rotationSpeed: 10
+  rotationMultiplier: 200
+  attackRadius: 3
+  cooldownBasicAttack: 3
+  damage: 20
+  health: 100
   speed: 2000
   fusionParticle: {fileID: 0}
+  bulletPrefab: {fileID: 6257437744043543912, guid: 56b441908f503c147bdc65e44214e4d2, type: 3}
+  longRange: 10
+  cooldownShoot: 10
+  bulletSpeed: 15
+  virusLongRange: []
+  cooldownPoison: 5

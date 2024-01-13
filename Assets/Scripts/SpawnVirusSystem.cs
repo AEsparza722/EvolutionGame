@@ -20,7 +20,7 @@ public class SpawnVirusSystem : MonoBehaviour
     IEnumerator CreateSpawner()
     {
         canCreateSpawner = false;
-        Instantiate(VirusSpawner, new Vector2(Random.Range(-40f, 40f), Random.Range(-40f, 40f)), Quaternion.identity, transform.parent);
+        Instantiate(VirusSpawner, new Vector2(Random.Range(-GameManager.instance.gameArea.x/2, GameManager.instance.gameArea.x/2), Random.Range(-GameManager.instance.gameArea.y/2, GameManager.instance.gameArea.y/2)), Quaternion.identity, transform.parent);
         yield return new WaitForSeconds(cooldown);
         canCreateSpawner = true;
     }

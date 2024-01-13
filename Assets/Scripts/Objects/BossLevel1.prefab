@@ -5274,7 +5274,7 @@ MonoBehaviour:
   rotationMultiplier: 200
   attackRadius: 4
   cooldownBasicAttack: 3
-  damage: 20
+  damage: 50
   health: 100
-  speed: 2000
+  speed: 1500
   fusionParticle: {fileID: 0}

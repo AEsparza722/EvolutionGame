@@ -27,9 +27,9 @@ public class BossController : MonoBehaviour
     GameObject virusFocus;
 
     [Header("Stats")]
-    public int damage;
-    public int health;
-    public float speed;
+    public float damage;
+    public float health;
+    public float speed;    
 
     [Header("Effects")]
     [SerializeField] ParticleSystem fusionParticle;    
@@ -148,4 +148,6 @@ public class BossController : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
+
 }

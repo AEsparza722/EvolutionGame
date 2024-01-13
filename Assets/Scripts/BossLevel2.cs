@@ -25,7 +25,7 @@ public class BossLevel2 : BossLevel1
 
         for (int i = 0; i < detectedVirus.Count; i++)
         {
-            detectedVirus[i].GetComponent<CharacterControler>().takeDamage(damage / 3, 20f);
+            detectedVirus[i].GetComponent<CharacterControler>().takeDamage(damage / 3f, 20f);
         }
 
         yield return new WaitForSeconds(cooldownBasicAttack * 2);

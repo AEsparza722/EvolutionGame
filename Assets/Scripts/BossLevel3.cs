@@ -69,7 +69,7 @@ public class BossLevel3 : BossLevel2
         }             
     }
       
-    void UpdateBoss3()
+    public void UpdateBoss3()
     {
         UpdateBoss();
         if (canShoot)

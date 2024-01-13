@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossLevel1 : BossController
 {
+    
     private void Awake()
     {
         InitializeBoss();

@@ -17,7 +17,7 @@ public class CharacterControler : MonoBehaviour
     public VirusData virusData;
     [SerializeField] ParticleSystem fusionParticle;
     [SerializeField] TMP_Text coinsText;
-    int health;
+    float health;
     MeshRenderer meshRenderer;
 
     Color defaultColor;
@@ -151,8 +151,8 @@ public class CharacterControler : MonoBehaviour
     private void OnMouseDrag()
     {        
         Vector2 mouseDrag = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDrag.x = Mathf.Clamp(mouseDrag.x, -45f, 45f);
-        mouseDrag.y = Mathf.Clamp(mouseDrag.y, -45f, 45f);
+        mouseDrag.x = Mathf.Clamp(mouseDrag.x, -GameManager.instance.gameArea.x -5, GameManager.instance.gameArea.x -5);
+        mouseDrag.y = Mathf.Clamp(mouseDrag.y, -GameManager.instance.gameArea.y - 5, GameManager.instance.gameArea.y - 5);
         Vector2 mouseOffset = mouseDrag - initialMousePosition;
         transform.position = initialObjectPosition + mouseOffset;           
     }
@@ -195,7 +195,7 @@ public class CharacterControler : MonoBehaviour
 
     }
 
-    public void takeDamage(int damage, float force)
+    public void takeDamage(float damage, float force)
     {
         health -= damage;
         
@@ -208,6 +208,16 @@ public class CharacterControler : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public IEnumerator takeDamageOverTime(float damage, float times, float seconds)
+    {
+        for (int i = 0; i < times; i++)
+        {
+            takeDamage(damage, 1f);
+            yield return new WaitForSeconds(seconds);
+        }              
+        
     }
 
     IEnumerator ChangeColorDamage()
