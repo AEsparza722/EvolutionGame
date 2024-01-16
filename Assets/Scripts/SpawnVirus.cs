@@ -8,9 +8,9 @@ public class SpawnVirus : MonoBehaviour
     [SerializeField] float destroySpawnerAfter = 5;
 
 
-    private void Update()
+    private void OnEnable()
     {
-        Invoke("DestroySpawner", destroySpawnerAfter);
+        StartCoroutine(SpawnVirusSystem.instance.ReturnToPool(destroySpawnerAfter, gameObject));
     }
 
     private void OnMouseDown()
@@ -20,13 +20,9 @@ public class SpawnVirus : MonoBehaviour
     void Spawn()
     {
         Instantiate(virusPrefab, transform.position, Quaternion.identity, VirusManager.instance.transform);
-        Destroy(gameObject);        
+        StartCoroutine(SpawnVirusSystem.instance.ReturnToPool(0, gameObject));
     }
 
-    void DestroySpawner()
-    {
-        Destroy(gameObject);
-        //Debug.Log("Spawner expired");
-    }
+
 
 }

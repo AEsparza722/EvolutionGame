@@ -1,5 +1,87 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1568479402995004839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3205756560756896546}
+  - component: {fileID: 8473122500129087002}
+  - component: {fileID: 4670615271976105194}
+  m_Layer: 2
+  m_Name: DetectionRadius
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3205756560756896546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568479402995004839}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8747728873195805220}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8473122500129087002
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568479402995004839}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 15
+--- !u!114 &4670615271976105194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568479402995004839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1892457eabf39949a4dc1d640955085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virusDetected: []
 --- !u!1 &2668852687110768841
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +93,7 @@ GameObject:
   - component: {fileID: 1568484453884614037}
   - component: {fileID: 2105770299700257344}
   - component: {fileID: 8233543884152971306}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CoinsDropText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +230,7 @@ GameObject:
   - component: {fileID: 987212257561257966}
   - component: {fileID: 7505762665396016965}
   - component: {fileID: 7509656989501588737}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +331,7 @@ GameObject:
   - component: {fileID: 5283684471140316159}
   - component: {fileID: 3142965238698102063}
   - component: {fileID: 188006112752182417}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +416,7 @@ GameObject:
   - component: {fileID: 7106687262430618447}
   - component: {fileID: 8907121694420923660}
   - component: {fileID: 6184478917802089761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5167,7 +5249,7 @@ GameObject:
   - component: {fileID: 3834150327661469008}
   - component: {fileID: 1531215598788425186}
   - component: {fileID: 7782600996394437430}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BossLevel1
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -5190,6 +5272,7 @@ Transform:
   - {fileID: 5283684471140316159}
   - {fileID: 7106687262430618447}
   - {fileID: 4535659238682203654}
+  - {fileID: 3205756560756896546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &3834150327661469008
@@ -5269,6 +5352,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1531215598788425186}
   circleCollider: {fileID: 3834150327661469008}
+  bossDetectionRadius: {fileID: 0}
+  setDetectionRadius: 15
   canMove: 1
   rotationSpeed: 10
   rotationMultiplier: 200

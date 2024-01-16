@@ -14,8 +14,8 @@ TagManager:
   - Virus
   - Water
   - UI
-  - 
-  - 
+  - Boss
+  - Elements
   - 
   - 
   - 
@@ -43,4 +43,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Elements
+    uniqueID: 4006737641
+    locked: 0
+  - name: Virus
+    uniqueID: 2475246539
+    locked: 0
+  - name: Boss
+    uniqueID: 4290476047
     locked: 0

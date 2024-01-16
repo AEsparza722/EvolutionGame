@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossController : MonoBehaviour
@@ -11,6 +12,8 @@ public class BossController : MonoBehaviour
     [Header("Components")]
     public Rigidbody2D rb;
     public CircleCollider2D circleCollider;
+    public BossDetectionRadius bossDetectionRadius;
+    [SerializeField] float setDetectionRadius;
 
     [Header("Behaviours")]
     Vector2 movementDirection;    
@@ -18,6 +21,7 @@ public class BossController : MonoBehaviour
     public bool canMove = true;
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 200f;
+    
 
     [Header("Attack")]
     [SerializeField] protected float attackRadius = 3f;
@@ -33,11 +37,14 @@ public class BossController : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] ParticleSystem fusionParticle;    
+
     
     protected void InitializeBoss()
     {
         circleCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        bossDetectionRadius = GetComponentInChildren<BossDetectionRadius>();
+        bossDetectionRadius.gameObject.GetComponent<CircleCollider2D>().radius = setDetectionRadius;
     }
 
     public virtual void UpdateBoss()
@@ -45,6 +52,16 @@ public class BossController : MonoBehaviour
         if (canChangeDirection && canMove)
         {
             StartCoroutine(MoveCharacter());
+        }
+
+        if (bossDetectionRadius.virusDetected.Count > 0)
+        {
+            canMove = false;
+            ChaseVirus();
+        }
+        else
+        {
+            canMove = true;
         }
 
         if (canAttack)
@@ -77,6 +94,13 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(1f, 5f));
         canChangeDirection = true;
 
+    }
+
+    void ChaseVirus()
+    {
+        movementDirection = (bossDetectionRadius.virusDetected[0].transform.position - transform.position).normalized;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(movementDirection * speed, ForceMode2D.Impulse);
     }
     
     IEnumerator BasicAttack()
@@ -145,7 +169,7 @@ public class BossController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Spawner"))
         {
-            Destroy(collision.gameObject);
+            StartCoroutine(SpawnVirusSystem.instance.ReturnToPool(0, collision.gameObject));
         }
     }
 
