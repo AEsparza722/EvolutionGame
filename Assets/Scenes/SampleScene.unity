@@ -11383,7 +11383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VirusSpawner: {fileID: 2819961882813513739, guid: cd5ddfe07cf3d9247a9d3c2cfcfb8c9a, type: 3}
-  cooldown: 0.5
+  cooldown: 5
   objectsToSpawn: 10
 --- !u!1 &1050666618
 GameObject:
