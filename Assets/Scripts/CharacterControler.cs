@@ -19,6 +19,8 @@ public class CharacterControler : MonoBehaviour
     [SerializeField] TMP_Text coinsText;
     float health;
     MeshRenderer meshRenderer;
+    [SerializeField] VirusAreaDetection virusDetectionRadius;
+    [SerializeField] float setDetectionRadius;
 
     Color defaultColor;
 
@@ -31,7 +33,10 @@ public class CharacterControler : MonoBehaviour
         circleCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();    
         meshRenderer = GetComponentInChildren<MeshRenderer>();
-                
+
+        virusDetectionRadius = GetComponentInChildren<VirusAreaDetection>();
+        virusDetectionRadius.gameObject.GetComponent<CircleCollider2D>().radius = setDetectionRadius;
+
     }
 
     private void Start()
@@ -47,17 +52,17 @@ public class CharacterControler : MonoBehaviour
             StartCoroutine(MoveCharacter());
         }
 
-        if (canIncreaseCoins)
-        {
-            StartCoroutine(DropCoins());
-        }
-
-        if (BossSystem.instance.currentBoss != null)
+        if(virusDetectionRadius.bossDetected.Count > 0)
         {
             canMove = false;
             MoveToBoss();
         }
 
+        if (canIncreaseCoins)
+        {
+            StartCoroutine(DropCoins());
+        }
+         
         //Rotation
         Quaternion rotationDir = Quaternion.Euler(
             movementDirection.x * rotationMultiplier, 
@@ -78,6 +83,7 @@ public class CharacterControler : MonoBehaviour
 
     }
 
+    
     IEnumerator MoveCharacter()
     {
         canChangeDirection = false;

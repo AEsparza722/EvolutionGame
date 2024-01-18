@@ -49,13 +49,13 @@ public class UpgradeController : MonoBehaviour
         if (isMenuActive) 
         {
             //upgradeMenu.SetActive(false);
-            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), -971.4f, .5f); //initial pos
+            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), -1075f, .5f); //initial pos
             isMenuActive = false;
         }
         else
         {
             //upgradeMenu.SetActive(true);
-            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), -575f, .5f); //open pos
+            LeanTween.moveY(upgradeMenu.GetComponent<RectTransform>(), -660f, .5f); //open pos
             isMenuActive = true;
         }
         

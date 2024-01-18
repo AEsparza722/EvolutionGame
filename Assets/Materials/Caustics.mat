@@ -42,14 +42,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
     - _Float: 0.61
+    - _Power: 5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Tiling: 0.65
+    - _RippleDensity: 12.53
+    - _RippleSpeed: 1
+    - _Tiling: 1.07
     - _UVScale: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 0.06666667, g: 0.07058824, b: 0.14509805, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _RippleColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
     - _Tiling: {r: 2, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
