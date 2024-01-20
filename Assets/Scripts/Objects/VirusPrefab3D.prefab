@@ -5357,6 +5357,6 @@ MonoBehaviour:
   fusionParticle: {fileID: 8907121694420923660}
   coinsText: {fileID: 8233543884152971306}
   virusDetectionRadius: {fileID: 4815628271697847174}
-  setDetectionRadius: 5
+  setDetectionRadius: 12
   rotationSpeed: 50
   rotationMultiplier: 500

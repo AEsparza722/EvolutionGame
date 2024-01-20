@@ -42,7 +42,12 @@ public class BossSystem : MonoBehaviour
         if(currentScore >= requiredScore)
         {
             SpawnBoss();
-        } 
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SpawnBoss();
+        }
     }
 
     public void IncreaseScore(float coinsScore)
@@ -64,6 +69,7 @@ public class BossSystem : MonoBehaviour
         bossController.speed *= levelMultiplier;
 
         currentScore = 0;
+        requiredScore *= 1.3f; 
 
     }
 

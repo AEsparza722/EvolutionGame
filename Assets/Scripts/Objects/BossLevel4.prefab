@@ -375,7 +375,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c77aa53e2a246604297a81472fe301c6, type: 2}
+  - {fileID: 2100000, guid: 6fb02a8df81549c43b45ab91b4fde39d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5354,15 +5354,15 @@ MonoBehaviour:
   rb: {fileID: 1531215598788425186}
   circleCollider: {fileID: 3834150327661469008}
   bossDetectionRadius: {fileID: 0}
-  setDetectionRadius: 15
+  setDetectionRadius: 20
   canMove: 1
   rotationSpeed: 10
   rotationMultiplier: 200
   attackRadius: 4
   cooldownBasicAttack: 3
-  damage: 20
-  health: 100
-  speed: 1000
+  damage: 250
+  health: 1200
+  speed: 1500
   fusionParticle: {fileID: 0}
   bulletPrefab: {fileID: 6257437744043543912, guid: 56b441908f503c147bdc65e44214e4d2, type: 3}
   longRange: 10

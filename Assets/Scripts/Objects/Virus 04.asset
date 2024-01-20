@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Virus 04
   m_EditorClassIdentifier: 
   Name: Virus 4
-  Health: 50
+  Health: 200
   Icon: {fileID: -3681356980117613468, guid: 8d5102286ec29d94c8510a57854c36ec, type: 3}
   VirusMesh: {fileID: -1304234598707462683, guid: 29b8a4863336d1649b970ee270880689, type: 3}
-  Speed: 0.5
+  Speed: 1.4
   VirusLevel: 4
-  Damage: 10
+  Damage: 60
   Coins: 4
