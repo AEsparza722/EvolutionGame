@@ -80,6 +80,7 @@ public class BossSystem : MonoBehaviour
         //Debug.Log(bossController.health);
         if (bossController.health <= 0)
         {
+            Destroy(bossController.indicatorArrow);
             BossController prefabBossController = bossList[currentLevel - 1].GetComponent<BossController>();
             Destroy(currentBoss.gameObject);
             currentBoss = null;

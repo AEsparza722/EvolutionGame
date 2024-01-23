@@ -29,7 +29,7 @@ public class SpawnVirusSystem : MonoBehaviour
     {
         if (canCreateSpawner)
         {
-            StartCoroutine(CreateSpawner());            
+            StartCoroutine(CreateSpawner());
         }
         
     }

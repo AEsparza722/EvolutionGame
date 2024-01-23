@@ -5354,6 +5354,8 @@ MonoBehaviour:
   circleCollider: {fileID: 3834150327661469008}
   bossDetectionRadius: {fileID: 0}
   setDetectionRadius: 15
+  indicatorColor: {r: 1, g: 0, b: 0, a: 1}
+  indicatorArrowPrefab: {fileID: 7794831550548764126, guid: b1ffe956bb367ce47a61bf08b1f395ea, type: 3}
   canMove: 1
   rotationSpeed: 10
   rotationMultiplier: 200

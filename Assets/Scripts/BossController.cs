@@ -4,16 +4,21 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BossController : MonoBehaviour
+public class BossController : MonoBehaviour, IIndicator
 {
-    
-    
+    public Color color { get => indicatorColor; set => indicatorColor = value; }
+    public bool isActive { get => indicatorActive; set => indicatorActive = value; }
 
     [Header("Components")]
     public Rigidbody2D rb;
     public CircleCollider2D circleCollider;
     public BossDetectionRadius bossDetectionRadius;
     [SerializeField] float setDetectionRadius;
+    [SerializeField] Color indicatorColor = Color.red;
+    [SerializeField] GameObject indicatorArrowPrefab;
+    public GameObject indicatorArrow;
+
+    
 
     [Header("Behaviours")]
     Vector2 movementDirection;    
@@ -21,6 +26,7 @@ public class BossController : MonoBehaviour
     public bool canMove = true;
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 200f;
+    bool indicatorActive = true;
     
 
     [Header("Attack")]
@@ -36,15 +42,16 @@ public class BossController : MonoBehaviour
     public float speed;    
 
     [Header("Effects")]
-    [SerializeField] ParticleSystem fusionParticle;    
+    [SerializeField] ParticleSystem fusionParticle;
 
-    
     protected void InitializeBoss()
     {
         circleCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         bossDetectionRadius = GetComponentInChildren<BossDetectionRadius>();
         bossDetectionRadius.gameObject.GetComponent<CircleCollider2D>().radius = setDetectionRadius;
+        indicatorArrow = Instantiate(indicatorArrowPrefab);
+        indicatorArrow.GetComponent<SpriteRenderer>().color = indicatorColor;
     }
 
     public virtual void UpdateBoss()
@@ -68,6 +75,8 @@ public class BossController : MonoBehaviour
         {
             StartCoroutine(BasicAttack());
         }
+
+        Detect();
 
         //Rotation
         // Generate random rotation for each axis
@@ -170,6 +179,41 @@ public class BossController : MonoBehaviour
         if (collision.gameObject.CompareTag("Spawner"))
         {
             StartCoroutine(SpawnVirusSystem.instance.ReturnToPool(0, collision.gameObject));
+        }
+    }
+
+    public void Detect()
+    {
+        if (indicatorActive)
+        {
+
+            Vector2 direction = transform.position - indicatorArrow.transform.position;
+            Vector2 targetViewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+            float distance = direction.magnitude;
+            float normalizedDistance = 1.5f - (distance / 50f) * 2f;
+
+
+
+            if (targetViewportPosition.x > 0f && targetViewportPosition.x < 1f && targetViewportPosition.y > 0f && targetViewportPosition.y < 1f)
+            {
+                indicatorArrow.SetActive(false);
+            }
+            else
+            {
+                indicatorArrow.SetActive(true);
+
+                //Position
+                Vector3 screenEgde = Camera.main.ViewportToWorldPoint(new Vector3(Mathf.Clamp(targetViewportPosition.x, 0.05f, 0.95f), Mathf.Clamp(targetViewportPosition.y, 0.1f, 0.9f), Camera.main.nearClipPlane));
+                indicatorArrow.transform.position = screenEgde;
+
+                //Rotation
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                indicatorArrow.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+
+             
+                indicatorArrow.transform.localScale = new Vector3(normalizedDistance, normalizedDistance, indicatorArrow.transform.localScale.z);
+
+            }
         }
     }
 
