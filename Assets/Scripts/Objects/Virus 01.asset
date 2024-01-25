@@ -20,3 +20,4 @@ MonoBehaviour:
   VirusLevel: 1
   Damage: 10
   Coins: 1
+  AttackRadius: 3

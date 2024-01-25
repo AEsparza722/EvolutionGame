@@ -94,6 +94,7 @@ public class Magnet : MonoBehaviour
     void MoveVirusestoMagnet()
     {
         isFusion = true;
+        
         Vector2 virus1Distance;
         Vector2 virus2Distance;
         GameObject[] virusArray = GetFusionVirus();
@@ -104,6 +105,8 @@ public class Magnet : MonoBehaviour
         virus1Pos = virus1;
         virus2Pos = virus2;
 
+        virus1Pos.isMagnet = true;
+        virus2Pos.isMagnet = true;
 
         virus1.canMove = false;
         virus2.canMove = false;
@@ -127,19 +130,25 @@ public class Magnet : MonoBehaviour
     void FusionVirusMagnet()
     {
         isFusion = false;
+        
+        
 
         if (virus2Pos != null && virus2Pos.gameObject != null)
         {
+            
+            virus2Pos.isMagnet = false;
             Destroy(virus2Pos.gameObject);
         }
 
         if (virus1Pos != null && virus1Pos.gameObject != null)
         {
+            virus1Pos.isMagnet = false;
             virus1Pos.virusData = VirusManager.instance.NextVirus(virus1Pos.virusData);
             virus1Pos.UpdateVirusData();
 
             virus1Pos.canMove = true;
             virus1Pos.circleCollider.isTrigger = false;
+            
 
             virus1Pos = null;
             virus2Pos = null;

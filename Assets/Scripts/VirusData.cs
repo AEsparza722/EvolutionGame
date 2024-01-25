@@ -13,5 +13,6 @@ public class VirusData : ScriptableObject
     public int VirusLevel;
     public int Damage;
     public int Coins;
+    public float AttackRadius;
   
 }

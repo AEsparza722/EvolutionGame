@@ -14,13 +14,16 @@ public class CharacterControler : MonoBehaviour
     bool canIncreaseCoins = true;
     public bool canMove = true;
     bool isKnockback;
+    public bool isMagnet;
+    bool canAttack = true;
     public VirusData virusData;
     [SerializeField] ParticleSystem fusionParticle;
     [SerializeField] TMP_Text coinsText;
-    float health;
+    public float health;
     MeshRenderer meshRenderer;
     [SerializeField] VirusAreaDetection virusDetectionRadius;
     [SerializeField] float setDetectionRadius;
+    
 
     Color defaultColor;
 
@@ -52,7 +55,7 @@ public class CharacterControler : MonoBehaviour
             StartCoroutine(MoveCharacter());
         }
 
-        if(virusDetectionRadius.bossDetected.Count > 0)
+        if(virusDetectionRadius.bossDetected.Count > 0 && !isMagnet)
         {
             canMove = false;
             MoveToBoss();
@@ -80,7 +83,11 @@ public class CharacterControler : MonoBehaviour
         //Rotate text to camera
          coinsText.transform.LookAt(Camera.main.transform.position);
 
-
+        if (canAttack)
+        {
+            StartCoroutine(AttackBoss());
+        }
+        
     }
 
     
@@ -98,13 +105,20 @@ public class CharacterControler : MonoBehaviour
     void MoveToBoss()
     {
         
-            movementDirection = (BossSystem.instance.currentBoss.transform.position - transform.position).normalized;
+            movementDirection = (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized;
             
         if (!isKnockback)
         {
-            rb.velocity = Vector2.zero;
-            rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
+            if (!isMagnet)
+            {
+                rb.velocity = Vector2.zero;
+                rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
+            }
+            
+            
         }
+
+        
 
     }
 
@@ -118,15 +132,29 @@ public class CharacterControler : MonoBehaviour
         TextAnimation();
         canIncreaseCoins = true;
 
-    //Attack boss
-        if (BossSystem.instance.currentBoss != null)
+      
+
+    }
+
+    IEnumerator AttackBoss()
+    {
+        canAttack = false;
+        List<GameObject> bossesDetected = new List<GameObject>();
+        Collider2D[] bossColliders = Physics2D.OverlapCircleAll(transform.position, virusData.AttackRadius);
+        foreach (Collider2D collider in bossColliders)
         {
-            if ((BossSystem.instance.currentBoss.transform.position - transform.position).magnitude <= 3f)
+            if (collider.gameObject.CompareTag("Boss"))
             {
-                BossSystem.instance.takeDamage(virusData.Damage);                
+                bossesDetected.Add(collider.gameObject);                
             }
         }
-
+        if(bossesDetected.Count > 0)
+        {
+            bossesDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage);
+            Debug.Log("SI");
+        }
+        yield return new WaitForSeconds(5);
+        canAttack = true;
     }
 
     void TextAnimation()
@@ -203,6 +231,10 @@ public class CharacterControler : MonoBehaviour
 
     public void takeDamage(float damage, float force)
     {
+        if (isMagnet)
+        {
+            return;
+        }
         health -= damage;
         
         //Debug.Log(health);
@@ -212,6 +244,7 @@ public class CharacterControler : MonoBehaviour
 
         if (health <= 0)
         {
+            
             Destroy(gameObject);
         }
     }

@@ -17,7 +17,7 @@ public class SpawnMagnet : MonoBehaviour
     private void Update()
     {
         cooldown = Magnet.CurrentEffect;
-        if (canCreateMagnet && CanSpawnMagnet() && BossSystem.instance.currentBoss == null)
+        if (canCreateMagnet && CanSpawnMagnet())
         {
             StartCoroutine(CreateMagnet());
         }
@@ -27,7 +27,8 @@ public class SpawnMagnet : MonoBehaviour
     IEnumerator CreateMagnet()
     {
         canCreateMagnet = false;
-        Instantiate(MagnetSpawner, new Vector2(Random.Range(-GameManager.instance.gameArea.x / 2, GameManager.instance.gameArea.x / 2), Random.Range(-GameManager.instance.gameArea.y / 2, GameManager.instance.gameArea.y / 2)), Quaternion.identity, transform.parent);
+        GameObject magnetInstance = Instantiate(MagnetSpawner, Camera.main.ViewportToWorldPoint(new Vector2(0.5f, 0.5f)), Quaternion.identity, transform.parent);
+        magnetInstance.transform.position = new Vector3(magnetInstance.transform.position.x, magnetInstance.transform.position.y, 0f);
         Debug.Log("Spawning Magnet");
         yield return new WaitForSeconds(cooldown - (Magnet.MultiplierEffect*Magnet.Level));
         canCreateMagnet = true;

@@ -169,9 +169,14 @@ public class BossController : MonoBehaviour, IIndicator
 
     void AttackVirus()
     {
-        virusFocus.GetComponent<CharacterControler>().takeDamage(damage, 3.5f);
-        StartCoroutine(PostProcess.instance.DamagePostProcess(.5f)); //DamagePost process
-        ShakeCamera.instance.ShakeCam(2, .5f); //Shake camera, cambiar a viruses
+        virusFocus.GetComponent<CharacterControler>().takeDamage(damage, 3.5f);  
+
+        if(virusFocus.GetComponent<CharacterControler>().health <= 0) 
+        {
+            StartCoroutine(PostProcess.instance.DamagePostProcess(.5f)); //DamagePost process
+            ShakeCamera.instance.ShakeCam(1, .3f); //Shake camera, cambiar a viruses
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -214,6 +219,23 @@ public class BossController : MonoBehaviour, IIndicator
                 indicatorArrow.transform.localScale = new Vector3(normalizedDistance, normalizedDistance, indicatorArrow.transform.localScale.z);
 
             }
+        }
+    }
+
+
+    public void takeDamage(int damage)
+    {        
+        health -= damage;
+
+        //Debug.Log(bossController.health);
+        if (health <= 0)
+        {
+            Destroy(indicatorArrow);
+            BossSystem.instance.BossKilled();
+            PostProcess.instance.PostProcessDefault();
+            Destroy(gameObject);
+            
+            
         }
     }
 

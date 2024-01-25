@@ -73,29 +73,7 @@ public class BossSystem : MonoBehaviour
 
     }
 
-    public void takeDamage(int damage)
-    {
-        bossController.health -= damage;
-                
-        //Debug.Log(bossController.health);
-        if (bossController.health <= 0)
-        {
-            Destroy(bossController.indicatorArrow);
-            BossController prefabBossController = bossList[currentLevel - 1].GetComponent<BossController>();
-            Destroy(currentBoss.gameObject);
-            currentBoss = null;
-            bossController=null; 
-            bossesKilled++;
-            levelMultiplier += .05f;
-                       
-
-            if (bossesKilled == neededForNextLevel)
-            {
-                IncreaseBossLevel();
-            }
-        }
-    }
-
+   
     void IncreaseBossLevel()
     {
         bossesKilled = 0;
@@ -104,5 +82,19 @@ public class BossSystem : MonoBehaviour
         BossPrefab = bossList[currentLevel - 1];
         levelMultiplier = 1f;
 
+    }
+
+    public void BossKilled()
+    {
+        BossController prefabBossController = bossList[currentLevel - 1].GetComponent<BossController>();
+
+        bossesKilled++;
+        levelMultiplier += .05f;
+
+
+        if (bossesKilled == neededForNextLevel)
+        {
+            IncreaseBossLevel();
+        }
     }
 }
