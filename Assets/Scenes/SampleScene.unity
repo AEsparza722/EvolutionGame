@@ -11315,6 +11315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1351636097}
   - component: {fileID: 1351636096}
+  - component: {fileID: 1351636098}
   m_Layer: 0
   m_Name: SpawnUpgrades
   m_TagString: Untagged
@@ -11352,6 +11353,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1351636098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351636095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26391fe13bb609e48b8ddc4e51cdf296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountList:
+  - {fileID: 11400000, guid: 19035a01e32ea604bac026c21d041ea6, type: 2}
+  - {fileID: 11400000, guid: 228dc5378b20f30458a898ba6a960c1f, type: 2}
+  - {fileID: 11400000, guid: 7779f18b15b0f194986cddf9267d738e, type: 2}
 --- !u!1 &1366052522
 GameObject:
   m_ObjectHideFlags: 0
@@ -11849,6 +11866,7 @@ MonoBehaviour:
   container: {fileID: 1724516617}
   upgradeList:
   - {fileID: 11400000, guid: c0882bf3ddac6c549aaecdf616f55ed3, type: 2}
+  - {fileID: 11400000, guid: 914629fcc450dbc428a0a718bb8225e4, type: 2}
   Magnet: {fileID: 1351636096}
 --- !u!1 &2115599166
 GameObject:

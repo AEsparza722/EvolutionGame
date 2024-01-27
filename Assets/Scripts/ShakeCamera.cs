@@ -38,9 +38,18 @@ public class ShakeCamera : MonoBehaviour
 
     }
 
-    public void ShakeCam (float intensity, float seconds)
+    public void ShakeCam (float intensity, float seconds, Vector3 attackPosition)
     {
         CinemachineBasicMultiChannelPerlin shakeComponent = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        Vector2 direction = Camera.main.transform.position - attackPosition;
+        //20 = 0.6
+        float distance = direction.magnitude;
+        float normalizedDistance = 0f - (distance / 50f) * 1f; //Algoritmo cambiar tama;o de indicador
+        float normalizedReal = (1 + normalizedDistance);
+        intensity = intensity * normalizedReal;
+        Debug.Log(intensity);
+
         shakeComponent.m_AmplitudeGain = intensity;
         shakeTimer = seconds;
     }

@@ -44,8 +44,13 @@ public class SpawnVirus : MonoBehaviour, IIndicator
     }
     void Spawn()
     {
-        Instantiate(virusPrefab, transform.position, Quaternion.identity, VirusManager.instance.transform);
-        StartCoroutine(SpawnVirusSystem.instance.ReturnToPool(0, gameObject));
+        int times = SpawnMoreUpgrade.instance.GetRandomAmountData().quantity;
+        for (int i = 0; i < times; i++)
+        {
+            Instantiate(virusPrefab, transform.position, Quaternion.identity, VirusManager.instance.transform);
+            StartCoroutine(SpawnVirusSystem.instance.ReturnToPool(0, gameObject));
+        }
+        
     }
 
     public void Detect()
@@ -56,7 +61,7 @@ public class SpawnVirus : MonoBehaviour, IIndicator
             Vector2 direction = transform.position - indicatorArrow.transform.position;
             Vector2 targetViewportPosition = Camera.main.WorldToViewportPoint(transform.position);
             float distance = direction.magnitude;
-            float normalizedDistance = 1.5f - (distance / 50f) * 2f;
+            float normalizedDistance = 1.5f - (distance / 50f) * 2f; //Algoritmo cambiar tama;o de indicador
 
 
 

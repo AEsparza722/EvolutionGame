@@ -173,8 +173,8 @@ public class BossController : MonoBehaviour, IIndicator
 
         if(virusFocus.GetComponent<CharacterControler>().health <= 0) 
         {
-            StartCoroutine(PostProcess.instance.DamagePostProcess(.5f)); //DamagePost process
-            ShakeCamera.instance.ShakeCam(1, .3f); //Shake camera, cambiar a viruses
+            StartCoroutine(PostProcess.instance.DamagePostProcess(.5f, transform.position)); //DamagePost process
+            ShakeCamera.instance.ShakeCam(1, .3f, transform.position); //Shake camera, cambiar a viruses
         }
         
     }

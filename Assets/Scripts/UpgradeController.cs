@@ -27,6 +27,7 @@ public class UpgradeController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
 
     private void Start()
@@ -65,6 +66,7 @@ public class UpgradeController : MonoBehaviour
     {
         foreach (UpgradeData upgradeItem in upgradeList)
         {
+            upgradeItem.Level = 0;
             //Instanciar upgrades y actualizar valores con el scriptable object
             GameObject upgradeInstance = Instantiate(upgradePrefab, container.transform);
             upgradeInstance.name = upgradeItem.name;
@@ -79,7 +81,14 @@ public class UpgradeController : MonoBehaviour
                 case "Magnet":
                     upgradeInstance.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => UpgradeMagnet(upgradeItem));
                     upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
-                    break;                
+                    break;
+
+                case "Spawn More Viruses":
+                    upgradeInstance.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => UpgradeVirusAmount(upgradeItem));
+                    upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
+                    SpawnMoreUpgrade.instance.amountList[1].chance = upgradeItem.Level * 5f;
+                    SpawnMoreUpgrade.instance.amountList[2].chance = upgradeItem.Level * 1.5f;
+                    break;
             }
         }
     }
@@ -122,6 +131,27 @@ public class UpgradeController : MonoBehaviour
         
     }
 
+    //Spawn More
+    void UpgradeVirusAmount(UpgradeData upgradeItem)
+    {
+        float cost = upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level);
+        Debug.Log(cost);
+        //upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level);
+
+
+        if (GameManager.instance.coins >= cost)
+        {
+            upgradeItem.Level++;
+            GameManager.instance.coins -= cost;
+            SpawnMoreUpgrade.instance.amountList[1].chance = upgradeItem.Level * 5f;
+            SpawnMoreUpgrade.instance.amountList[2].chance = upgradeItem.Level * 1.5f;
+
+        }
+        else
+        {
+            Debug.Log("No te alcanza");
+        }
+    }
 
     #endregion
 }
