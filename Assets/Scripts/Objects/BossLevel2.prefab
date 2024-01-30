@@ -5249,6 +5249,7 @@ GameObject:
   - component: {fileID: 3834150327661469008}
   - component: {fileID: 1531215598788425186}
   - component: {fileID: -591189488600840444}
+  - component: {fileID: 8460746621593943513}
   m_Layer: 0
   m_Name: BossLevel2
   m_TagString: Boss
@@ -5354,6 +5355,9 @@ MonoBehaviour:
   circleCollider: {fileID: 3834150327661469008}
   bossDetectionRadius: {fileID: 0}
   setDetectionRadius: 15
+  indicatorColor: {r: 1, g: 0, b: 0, a: 1}
+  indicatorArrowPrefab: {fileID: 7794831550548764126, guid: b1ffe956bb367ce47a61bf08b1f395ea, type: 3}
+  indicatorArrow: {fileID: 0}
   canMove: 1
   rotationSpeed: 10
   rotationMultiplier: 200
@@ -5363,3 +5367,25 @@ MonoBehaviour:
   health: 500
   speed: 1200
   fusionParticle: {fileID: 0}
+--- !u!95 &8460746621593943513
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8789001809645850492}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c71e4845ea63d0747a6cb6c130348d17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

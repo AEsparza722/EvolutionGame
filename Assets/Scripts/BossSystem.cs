@@ -55,7 +55,7 @@ public class BossSystem : MonoBehaviour
         if (currentBoss == null)
         {
             currentScore += coinsScore;
-            Debug.Log(currentScore);
+            //Debug.Log(currentScore);
         }
 
     }

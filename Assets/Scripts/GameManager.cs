@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         Gizmos.DrawWireCube(gameObject.transform.position, gameArea);
     }
 
-    public void UpdateCoins(int newCoins)
+    public void UpdateCoins(float newCoins)
     {
         coins += newCoins;
         coinsText.text = coins.ToString();

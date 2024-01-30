@@ -13,9 +13,12 @@ public class UpgradeController : MonoBehaviour
     [SerializeField] GameObject upgradePrefab;
     [SerializeField] GameObject container;
     [SerializeField] List<UpgradeData> upgradeList;
+    public bool canClickDamage = false;
 
     [Header("Upgrades")]
     [SerializeField] SpawnMagnet Magnet;
+    [SerializeField] public UpgradeData ClickDamage;
+    
 
     private void Awake()
     {
@@ -73,7 +76,7 @@ public class UpgradeController : MonoBehaviour
             upgradeInstance.transform.GetChild(0).GetComponent<Image>().sprite = upgradeItem.Icon;
             upgradeInstance.transform.GetChild(1).GetComponent<TMP_Text>().text = upgradeItem.Name;
             upgradeInstance.transform.GetChild(2).GetComponent<TMP_Text>().text = upgradeItem.Description;
-            upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = upgradeItem.Cost.ToString();
+            //upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = upgradeItem.Cost.ToString();
             
             //Agregar casos por cada upgrade por nombre
             switch (upgradeItem.Name)
@@ -83,11 +86,15 @@ public class UpgradeController : MonoBehaviour
                     upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
                     break;
 
-                case "Spawn More Viruses":
+                case "SpawnMoreViruses":
                     upgradeInstance.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => UpgradeVirusAmount(upgradeItem));
                     upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
                     SpawnMoreUpgrade.instance.amountList[1].chance = upgradeItem.Level * 5f;
                     SpawnMoreUpgrade.instance.amountList[2].chance = upgradeItem.Level * 1.5f;
+                    break;
+                case "ClickDamage":
+                    upgradeInstance.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => UpgradeClickDamage(upgradeItem));
+                    upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
                     break;
             }
         }
@@ -102,6 +109,7 @@ public class UpgradeController : MonoBehaviour
                 if (container.transform.GetChild(i).name == upgradeList[j].Name)
                 {
                     container.transform.GetChild(i).GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeList[j].Cost + (upgradeList[j].Cost * upgradeList[j].Level)).ToString();
+                    
                 }
             }
         }
@@ -113,7 +121,7 @@ public class UpgradeController : MonoBehaviour
     void UpgradeMagnet(UpgradeData upgradeItem)
     {
         float MagnetCost = upgradeItem.Cost + (upgradeItem.Cost*upgradeItem.Level);
-        Debug.Log(MagnetCost);
+        //Debug.Log(MagnetCost);
         //upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level);
 
 
@@ -121,7 +129,7 @@ public class UpgradeController : MonoBehaviour
         {
             Magnet.enabled = true;
             upgradeItem.Level++;
-            GameManager.instance.coins -= MagnetCost;
+            GameManager.instance.UpdateCoins(-MagnetCost);
 
         }
         else
@@ -142,15 +150,38 @@ public class UpgradeController : MonoBehaviour
         if (GameManager.instance.coins >= cost)
         {
             upgradeItem.Level++;
-            GameManager.instance.coins -= cost;
+            GameManager.instance.UpdateCoins(-cost);
             SpawnMoreUpgrade.instance.amountList[1].chance = upgradeItem.Level * 5f;
             SpawnMoreUpgrade.instance.amountList[2].chance = upgradeItem.Level * 1.5f;
+            
+        }
+        else
+        {
+            Debug.Log("No te alcanza");
+        }
+        UpdateUpgrades();
+    }
+
+    //Click damage
+    void UpgradeClickDamage(UpgradeData upgradeItem)
+    {
+        float cost = upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level);
+        Debug.Log(cost);
+        //upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level);
+
+
+        if (GameManager.instance.coins >= cost)
+        {
+            upgradeItem.Level++;
+            GameManager.instance.UpdateCoins(-cost);
+            canClickDamage = true;
 
         }
         else
         {
             Debug.Log("No te alcanza");
         }
+        UpdateUpgrades();
     }
 
     #endregion

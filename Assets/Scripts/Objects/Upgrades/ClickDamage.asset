@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ed9d85fa958a5b42979db859bcd9f75, type: 3}
-  m_Name: SpawnMoreViruses
+  m_Name: ClickDamage
   m_EditorClassIdentifier: 
-  Name: SpawnMoreViruses
+  Name: ClickDamage
   Cost: 2
-  Level: 1
+  Level: 0
   CostMultiplier: 2
-  Icon: {fileID: 4863732084037322925, guid: fcf4cac2454f37f46a27725f05e67595, type: 3}
+  Icon: {fileID: 803220956401320507, guid: da75b6bbeb3bb5e45b08349bd1fede83, type: 3}
   Description: 
-  CurrentEffect: 5
+  CurrentEffect: 0.5
   MultiplierEffect: 2

@@ -11808,7 +11808,7 @@ MonoBehaviour:
   m_StartCorner: 2
   m_StartAxis: 0
   m_CellSize: {x: 301.3, y: 100}
-  m_Spacing: {x: 78, y: 20}
+  m_Spacing: {x: 78, y: 50}
   m_Constraint: 2
   m_ConstraintCount: 1
 --- !u!1 &1818973086
@@ -11867,7 +11867,10 @@ MonoBehaviour:
   upgradeList:
   - {fileID: 11400000, guid: c0882bf3ddac6c549aaecdf616f55ed3, type: 2}
   - {fileID: 11400000, guid: 914629fcc450dbc428a0a718bb8225e4, type: 2}
+  - {fileID: 11400000, guid: a0fe5d485125ed2489c72e7502d8c437, type: 2}
+  canClickDamage: 0
   Magnet: {fileID: 1351636096}
+  ClickDamage: {fileID: 11400000, guid: a0fe5d485125ed2489c72e7502d8c437, type: 2}
 --- !u!1 &2115599166
 GameObject:
   m_ObjectHideFlags: 0

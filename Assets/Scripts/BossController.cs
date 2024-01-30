@@ -17,6 +17,7 @@ public class BossController : MonoBehaviour, IIndicator
     [SerializeField] Color indicatorColor = Color.red;
     [SerializeField] GameObject indicatorArrowPrefab;
     public GameObject indicatorArrow;
+    Animator animator;
 
     
 
@@ -27,7 +28,7 @@ public class BossController : MonoBehaviour, IIndicator
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 200f;
     bool indicatorActive = true;
-    
+        
 
     [Header("Attack")]
     [SerializeField] protected float attackRadius = 3f;
@@ -48,6 +49,7 @@ public class BossController : MonoBehaviour, IIndicator
     {
         circleCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         bossDetectionRadius = GetComponentInChildren<BossDetectionRadius>();
         bossDetectionRadius.gameObject.GetComponent<CircleCollider2D>().radius = setDetectionRadius;
         indicatorArrow = Instantiate(indicatorArrowPrefab);
@@ -223,9 +225,10 @@ public class BossController : MonoBehaviour, IIndicator
     }
 
 
-    public void takeDamage(int damage)
+    public void takeDamage(float damage)
     {        
         health -= damage;
+        animator.SetTrigger("hit");
 
         //Debug.Log(bossController.health);
         if (health <= 0)
@@ -233,11 +236,17 @@ public class BossController : MonoBehaviour, IIndicator
             Destroy(indicatorArrow);
             BossSystem.instance.BossKilled();
             PostProcess.instance.PostProcessDefault();
-            Destroy(gameObject);
-            
-            
+            Destroy(gameObject);            
         }
     }
 
+    void OnMouseDown()
+    {
+        if (UpgradeController.instance.canClickDamage)
+        {
+            takeDamage(UpgradeController.instance.ClickDamage.CurrentEffect * UpgradeController.instance.ClickDamage.Level);
+            Debug.Log(UpgradeController.instance.ClickDamage.CurrentEffect * UpgradeController.instance.ClickDamage.Level);
+        }
+    }
 
 }
