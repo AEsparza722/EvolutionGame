@@ -151,7 +151,6 @@ public class CharacterControler : MonoBehaviour
         if(bossesDetected.Count > 0)
         {
             bossesDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage);
-            Debug.Log("SI");
         }
         yield return new WaitForSeconds(5);
         canAttack = true;

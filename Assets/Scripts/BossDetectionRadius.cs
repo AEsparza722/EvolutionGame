@@ -8,7 +8,7 @@ public class BossDetectionRadius : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.CompareTag("Virus"))
+        if(collision.transform.CompareTag("Virus") || collision.transform.CompareTag("Protect"))
         {
             if (!virusDetected.Contains(collision.gameObject))
             {
@@ -19,7 +19,7 @@ public class BossDetectionRadius : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Virus"))
+        if (collision.transform.CompareTag("Virus") || collision.transform.CompareTag("Protect"))
         {
             virusDetected.Remove(collision.gameObject);
         }

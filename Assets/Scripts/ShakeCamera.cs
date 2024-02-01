@@ -48,8 +48,7 @@ public class ShakeCamera : MonoBehaviour
         float normalizedDistance = 0f - (distance / 50f) * 1f; //Algoritmo cambiar tama;o de indicador
         float normalizedReal = (1 + normalizedDistance);
         intensity = intensity * normalizedReal;
-        Debug.Log(intensity);
-
+        
         shakeComponent.m_AmplitudeGain = intensity;
         shakeTimer = seconds;
     }

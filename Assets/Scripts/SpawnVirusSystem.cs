@@ -10,6 +10,7 @@ public class SpawnVirusSystem : MonoBehaviour
     [SerializeField] float cooldown;
     List<GameObject> spawners = new List<GameObject>();
     [SerializeField] int objectsToSpawn;
+    [SerializeField] GameObject motherVirus;
     
 
     private void Awake()
