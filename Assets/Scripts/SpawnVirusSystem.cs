@@ -10,8 +10,8 @@ public class SpawnVirusSystem : MonoBehaviour
     [SerializeField] float cooldown;
     List<GameObject> spawners = new List<GameObject>();
     [SerializeField] int objectsToSpawn;
-    [SerializeField] GameObject motherVirus;
-    
+
+        
 
     private void Awake()
     {
@@ -37,11 +37,23 @@ public class SpawnVirusSystem : MonoBehaviour
     IEnumerator CreateSpawner()
     {
         canCreateSpawner = false;
+        //float spawnPosX = Mathf.RoundToInt(Random.Range(-1f, 1f));
+        //spawnPosX = spawnPosX == 0 ? -1 : spawnPosX;
+        //float spawnPosY = Mathf.RoundToInt(Random.Range(-1f, 1f));
+        //spawnPosY = spawnPosY == 0 ? 1 : spawnPosY;
+
+        //Vector2 spawnPos = new Vector2
+        //    (
+        //    MotherController.instance.transform.position.x + spawnPosX * MotherController.instance.circleCollider.radius * 3f,
+        //    MotherController.instance.transform.position.y + spawnPosY * MotherController.instance.circleCollider.radius * 3f
+        //    );
+        
+        
         GameObject spawnerToInstantiate = GetSpawner();
-        spawnerToInstantiate.transform.position = new Vector2(Random.Range(-GameManager.instance.gameArea.x / 2, GameManager.instance.gameArea.x / 2), Random.Range(-GameManager.instance.gameArea.y / 2, GameManager.instance.gameArea.y / 2));
+        spawnerToInstantiate.transform.position = MotherController.instance.spawnObjects[0].transform.position;
+        
         spawnerToInstantiate.SetActive(true);
 
-       // Instantiate(VirusSpawner, new Vector2(Random.Range(-GameManager.instance.gameArea.x/2, GameManager.instance.gameArea.x/2), Random.Range(-GameManager.instance.gameArea.y/2, GameManager.instance.gameArea.y/2)), Quaternion.identity, transform.parent);
         yield return new WaitForSeconds(cooldown);
         canCreateSpawner = true;
     }

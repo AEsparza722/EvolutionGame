@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MotherController : MonoBehaviour
+public class MotherController : MonoBehaviour, IDamageable
 {
+
+    float IDamageable.health { get => health; set => health = value; }
+
+    public static MotherController instance;
     Vector2 movementDirection;
     bool canChangeDirection = true;
-    bool canMove = false;
-    CircleCollider2D circleCollider;
+    bool canMove = true;
+    bool isKnockback;
+    public CircleCollider2D circleCollider;
     Rigidbody2D rb;
     MeshRenderer meshRenderer;
     [SerializeField] VirusAreaDetection virusDetectionRadius;
     [SerializeField] float setDetectionRadius;
-    [SerializeField] GameObject root;
+    Color defaultColor;
+    
+    public List<GameObject> spawnObjects = new List<GameObject>();
+    
 
     [SerializeField] float speed;
+    [SerializeField] float health;
 
     
     [SerializeField] float rotationSpeed = 10f;
@@ -23,22 +32,34 @@ public class MotherController : MonoBehaviour
 
     private void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         circleCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
         virusDetectionRadius = GetComponentInChildren<VirusAreaDetection>();
         virusDetectionRadius.gameObject.GetComponent<CircleCollider2D>().radius = setDetectionRadius;
+            
 
     }
 
     private void Start()
     {
-        InstantiateRoots();
+        defaultColor = meshRenderer.material.GetColor("_FresnelColor");
     }
 
     private void Update()
     {
+        spawnObjects[0].transform.parent.gameObject.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+
         if (canChangeDirection && canMove)
         {
             StartCoroutine(MoveCharacter());
@@ -70,12 +91,44 @@ public class MotherController : MonoBehaviour
         canChangeDirection = true;
     }
 
-    void InstantiateRoots()
+    public void takeDamage(float damage, float force)
     {
-        for (int i = 0; i < 5; i++)
+        health -= damage;
+
+        //Debug.Log(health);
+
+        StartCoroutine(ChangeColorDamage());
+        StartCoroutine(KnockBack(force));
+
+        if (health <= 0)
         {
-            Instantiate(root, transform.position, Quaternion.identity, transform);
+
+            Destroy(gameObject);
         }
     }
 
+    public IEnumerator takeDamageOverTime(float damage, float times, float seconds)
+    {
+        for (int i = 0; i < times; i++)
+        {
+            takeDamage(damage, 1f);
+            yield return new WaitForSeconds(seconds);
+        }
+
+    }
+
+    public IEnumerator ChangeColorDamage()
+    {
+        meshRenderer.material.SetColor("_FresnelColor", Color.red);
+        yield return new WaitForSeconds(.3f);
+        meshRenderer.material.SetColor("_FresnelColor", defaultColor);
+    }
+
+    public IEnumerator KnockBack(float force)
+    {
+        isKnockback = true;
+        rb.AddForce(-movementDirection * (speed * force), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(.2f);
+        isKnockback = false;
+    }
 }

@@ -4,10 +4,12 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BossController : MonoBehaviour, IIndicator
+public class BossController : MonoBehaviour, IIndicator, IDamageable
 {
     public Color color { get => indicatorColor; set => indicatorColor = value; }
     public bool isActive { get => indicatorActive; set => indicatorActive = value; }
+
+    float IDamageable.health { get => health; set => health = value; }
 
     [Header("Components")]
     public Rigidbody2D rb;
@@ -154,7 +156,7 @@ public class BossController : MonoBehaviour, IIndicator
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].gameObject.CompareTag("Virus"))
+            if (colliders[i].gameObject.CompareTag("Virus") || colliders[i].gameObject.CompareTag("Protect"))
             {
                 virusInRange.Add(colliders[i].gameObject);
             }
@@ -171,9 +173,9 @@ public class BossController : MonoBehaviour, IIndicator
 
     void AttackVirus()
     {
-        virusFocus.GetComponent<CharacterControler>().takeDamage(damage, 3.5f);  
+        virusFocus.GetComponent<IDamageable>().takeDamage(damage, 3.5f);  
 
-        if(virusFocus.GetComponent<CharacterControler>().health <= 0) 
+        if(virusFocus.GetComponent<IDamageable>().health <= 0) 
         {
             StartCoroutine(PostProcess.instance.DamagePostProcess(.5f, transform.position)); //DamagePost process
             ShakeCamera.instance.ShakeCam(1, .3f, transform.position); //Shake camera, cambiar a viruses
@@ -225,7 +227,7 @@ public class BossController : MonoBehaviour, IIndicator
     }
 
 
-    public void takeDamage(float damage)
+    public void takeDamage(float damage, float force)
     {        
         health -= damage;
         animator.SetTrigger("hit");
@@ -244,9 +246,24 @@ public class BossController : MonoBehaviour, IIndicator
     {
         if (UpgradeController.instance.canClickDamage)
         {
-            takeDamage(UpgradeController.instance.ClickDamage.CurrentEffect * UpgradeController.instance.ClickDamage.Level);
+            takeDamage(UpgradeController.instance.ClickDamage.CurrentEffect * UpgradeController.instance.ClickDamage.Level,0);
             Debug.Log(UpgradeController.instance.ClickDamage.CurrentEffect * UpgradeController.instance.ClickDamage.Level);
         }
     }
+       
 
+    public IEnumerator takeDamageOverTime(float damage, float times, float seconds)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public IEnumerator KnockBack(float force)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public IEnumerator ChangeColorDamage()
+    {
+        throw new System.NotImplementedException();
+    }
 }

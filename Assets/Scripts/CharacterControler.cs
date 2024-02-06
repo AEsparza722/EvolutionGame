@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CharacterControler : MonoBehaviour
+public class CharacterControler : MonoBehaviour, IDamageable
 {
+    float IDamageable.health { get => health; set => health = value; }
+
     Vector2 movementDirection;
     Vector2 initialMousePosition;
     Vector2 initialObjectPosition;
@@ -30,6 +32,8 @@ public class CharacterControler : MonoBehaviour
 
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
+
+    
 
     private void Awake()
     {
@@ -150,7 +154,7 @@ public class CharacterControler : MonoBehaviour
         }
         if(bossesDetected.Count > 0)
         {
-            bossesDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage);
+            bossesDetected[0].GetComponent<IDamageable>().takeDamage(virusData.Damage, 0);
         }
         yield return new WaitForSeconds(5);
         canAttack = true;
@@ -256,20 +260,20 @@ public class CharacterControler : MonoBehaviour
             yield return new WaitForSeconds(seconds);
         }              
         
-    }
+    }           
 
-    IEnumerator ChangeColorDamage()
-    {
-        meshRenderer.material.SetColor("_FresnelColor", Color.red);
-        yield return new WaitForSeconds(.3f);
-        meshRenderer.material.SetColor("_FresnelColor", defaultColor);
-    }
-
-    IEnumerator KnockBack (float force)
+    public IEnumerator KnockBack(float force)
     {
         isKnockback = true;
         rb.AddForce(-movementDirection * (virusData.Speed * force), ForceMode2D.Impulse);
         yield return new WaitForSeconds(.2f);
         isKnockback = false;
+    }
+
+    public IEnumerator ChangeColorDamage()
+    {
+        meshRenderer.material.SetColor("_FresnelColor", Color.red);
+        yield return new WaitForSeconds(.3f);
+        meshRenderer.material.SetColor("_FresnelColor", defaultColor);
     }
 }
