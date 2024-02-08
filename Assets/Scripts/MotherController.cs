@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class MotherController : MonoBehaviour, IDamageable
 {
@@ -12,7 +13,6 @@ public class MotherController : MonoBehaviour, IDamageable
     Vector2 movementDirection;
     bool canChangeDirection = true;
     bool canMove = true;
-    bool isKnockback;
     public CircleCollider2D circleCollider;
     Rigidbody2D rb;
     MeshRenderer meshRenderer;
@@ -25,13 +25,15 @@ public class MotherController : MonoBehaviour, IDamageable
 
     [SerializeField] float speed;
     [SerializeField] float health;
+    float timeAlive;
 
     
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
+    [SerializeField] TMP_Text daysSurvivedText;
 
     private void Awake()
-    {
+    {        
         if(instance == null)
         {
             instance = this;
@@ -78,7 +80,8 @@ public class MotherController : MonoBehaviour, IDamageable
             rotationDir,
             rotationSpeed * Time.deltaTime
         );
-            
+
+        TimeAlive();
     }
 
     IEnumerator MoveCharacter()
@@ -102,7 +105,7 @@ public class MotherController : MonoBehaviour, IDamageable
 
         if (health <= 0)
         {
-
+            GameManager.instance.GameOver();
             Destroy(gameObject);
         }
     }
@@ -126,9 +129,18 @@ public class MotherController : MonoBehaviour, IDamageable
 
     public IEnumerator KnockBack(float force)
     {
-        isKnockback = true;
         rb.AddForce(-movementDirection * (speed * force), ForceMode2D.Impulse);
         yield return new WaitForSeconds(.2f);
-        isKnockback = false;
+    }
+
+    void TimeAlive()
+    {
+        timeAlive += Time.deltaTime;
+        if(timeAlive >= 10)
+        {
+            GameManager.instance.daysSurvived += 1;
+            timeAlive = 0;
+            daysSurvivedText.text = "Days Survived: "+GameManager.instance.daysSurvived.ToString();
+        }
     }
 }

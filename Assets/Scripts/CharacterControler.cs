@@ -91,6 +91,11 @@ public class CharacterControler : MonoBehaviour, IDamageable
         {
             StartCoroutine(AttackBoss());
         }
+
+        if (GameManager.instance.isGameOver)
+        {
+            Destroy(gameObject);
+        }
         
     }
 

@@ -96,6 +96,11 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
             randomRotation,
             rotationSpeed * Time.deltaTime
         );
+
+        if (GameManager.instance.isGameOver)
+        {
+            StopAllCoroutines();
+        }
     }
 
     IEnumerator MoveCharacter()

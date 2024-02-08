@@ -10,6 +10,7 @@ public class PostProcess : MonoBehaviour
 
     [SerializeField] Volume volume;
     Vignette vignetteDamage;
+    ColorAdjustments colorAdjustments;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class PostProcess : MonoBehaviour
             Destroy(gameObject);
         }
         volume.profile.TryGet<Vignette>(out vignetteDamage); //Obtener componente vignette
+        volume.profile.TryGet<ColorAdjustments>(out colorAdjustments); //Obtener Para saturacion
     }
 
     public void PostProcessDefault()
@@ -29,8 +31,9 @@ public class PostProcess : MonoBehaviour
         if (vignetteDamage != null)
         {
             vignetteDamage.color.value = Color.black;
-            vignetteDamage.intensity.value = .3f;
-            vignetteDamage.smoothness.value = .2f;
+            vignetteDamage.intensity.value = .409f;
+            vignetteDamage.smoothness.value = .285f;
+            colorAdjustments.saturation.value = 8f;
         }
         
     }
@@ -55,6 +58,11 @@ public class PostProcess : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         PostProcessDefault();
 
+    }
+
+    public void BlackAndWhite()
+    {
+        colorAdjustments.saturation.value = -100f;
     }
 
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Jobs;
+using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +13,14 @@ public class GameManager : MonoBehaviour
     public float coins;
     [SerializeField] public Vector2 gameArea;
     [SerializeField] GameObject Map;
+    public bool isGameOver = false;
+    [SerializeField] TMP_Text daysSurvivedText;
+    [SerializeField] TMP_Text maxSurvivedText;
+    [SerializeField] GameObject gameOverUI;
+    [SerializeField] GameObject pauseUI;
+    public int daysSurvived;    
+    public int maxDaysSurvived;
+
         
 
     private void Awake()
@@ -23,12 +33,22 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        maxDaysSurvived = PlayerPrefs.GetInt("MaxDaysSurvived");
         
     }
 
     private void Start()
     {
         generateLimits();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
     }
 
     private void OnDrawGizmos()
@@ -70,5 +90,59 @@ public class GameManager : MonoBehaviour
         RightLimits.transform.SetParent(Map.transform);
 
     }
+
+    public void GameOver()
+    {
+        if (daysSurvived>maxDaysSurvived || maxDaysSurvived==0)
+        {
+            PlayerPrefs.SetInt("MaxDaysSurvived", daysSurvived);
+            maxDaysSurvived = daysSurvived;
+        }
+        isGameOver = true;
+        gameOverUI.SetActive(true);
+        daysSurvivedText.text = "Days Survived: "+daysSurvived.ToString();
+        maxSurvivedText.text = "Best: "+maxDaysSurvived.ToString();
+                
+    }
+
+    public void Restart()
+    {
+        isGameOver = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    void Pause()
+    {
+        if (Time.timeScale == 0f)
+        {
+            pauseUI.SetActive(false);
+            PostProcess.instance.PostProcessDefault();
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            pauseUI.SetActive(true);
+            PostProcess.instance.BlackAndWhite();
+            Time.timeScale = 0f;
+        }
+        
+    }
+
+
 
 }

@@ -28,9 +28,13 @@ public class SpawnVirusSystem : MonoBehaviour
     }
     private void Update()
     {
-        if (canCreateSpawner)
+        if (canCreateSpawner && !GameManager.instance.isGameOver)
         {
             StartCoroutine(CreateSpawner());
+        }
+        if (GameManager.instance.isGameOver)
+        {
+            StopAllCoroutines();
         }
         
     }
