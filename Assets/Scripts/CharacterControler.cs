@@ -18,6 +18,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     bool isKnockback;
     public bool isMagnet;
     bool canAttack = true;
+    bool isAttacking = false;
     public VirusData virusData;
     [SerializeField] ParticleSystem fusionParticle;
     [SerializeField] TMP_Text coinsText;
@@ -87,16 +88,22 @@ public class CharacterControler : MonoBehaviour, IDamageable
         //Rotate text to camera
          coinsText.transform.LookAt(Camera.main.transform.position);
 
-        if (canAttack)
+
+        if (canAttack && virusDetectionRadius.bossDetected.Count != 0 && !isBlocked())
         {
-            StartCoroutine(AttackBoss());
+            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) < 4f)
+                StartCoroutine(AttackBoss());
         }
 
         if (GameManager.instance.isGameOver)
         {
             Destroy(gameObject);
         }
-        
+
+        if (isAttacking)
+        {
+            AttackUpdate();
+        }
     }
 
     
@@ -118,13 +125,19 @@ public class CharacterControler : MonoBehaviour, IDamageable
             
         if (!isKnockback)
         {
-            if (!isMagnet)
+            if (!isMagnet && !isAttacking)
             {
-                rb.velocity = Vector2.zero;
-                rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
-            }
-            
-            
+                if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) > 3.5f)
+                {
+                    rb.velocity = Vector2.zero;
+                    rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
+                }
+                else if(Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) < 3.5f)
+                {
+                    rb.velocity = Vector2.zero;
+                    rb.AddForce(-movementDirection * virusData.Speed, ForceMode2D.Impulse);
+                }                               
+            }            
         }
 
         
@@ -147,22 +160,64 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
     IEnumerator AttackBoss()
     {
+       
         canAttack = false;
-        List<GameObject> bossesDetected = new List<GameObject>();
-        Collider2D[] bossColliders = Physics2D.OverlapCircleAll(transform.position, virusData.AttackRadius);
-        foreach (Collider2D collider in bossColliders)
-        {
-            if (collider.gameObject.CompareTag("Boss"))
-            {
-                bossesDetected.Add(collider.gameObject);                
-            }
-        }
-        if(bossesDetected.Count > 0)
-        {
-            bossesDetected[0].GetComponent<IDamageable>().takeDamage(virusData.Damage, 0);
-        }
+        isAttacking = true;
+
+        movementDirection = (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(movementDirection * virusData.Speed * 10, ForceMode2D.Impulse); //Impulso
         yield return new WaitForSeconds(5);
         canAttack = true;
+        isAttacking = false;
+
+        //canAttack = false;
+        //List<GameObject> bossesDetected = new List<GameObject>();
+        //Collider2D[] bossColliders = Physics2D.OverlapCircleAll(transform.position, virusData.AttackRadius);
+        //foreach (Collider2D collider in bossColliders)
+        //{
+        //    if (collider.gameObject.CompareTag("Boss"))
+        //    {
+        //        bossesDetected.Add(collider.gameObject);                
+        //    }
+        //}
+        //if(bossesDetected.Count > 0)
+        //{
+        //    bossesDetected[0].GetComponent<IDamageable>().takeDamage(virusData.Damage, 0);
+        //}
+        //yield return new WaitForSeconds(5);
+        //canAttack = true;
+    }
+
+    void AttackUpdate()
+    {
+        if (virusDetectionRadius.bossDetected.Count > 0)
+        {
+            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) <= 2.2f)
+            {
+                isAttacking = false;
+                rb.velocity = Vector2.zero;
+                Debug.Log("perrilla");
+            }
+        }        
+    }
+
+    bool isBlocked()
+    {
+        RaycastHit2D[] hits;
+        hits = Physics2D.RaycastAll(transform.position, virusDetectionRadius.bossDetected[0].transform.position - transform.position);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if(hit.collider != null) 
+            {
+                if (hit.collider.gameObject != gameObject && !hit.collider.gameObject.CompareTag("Boss"))
+                {
+                    return true;
+                }
+            }         
+        }      
+        return false;
+        //Debug.DrawLine
     }
 
     void TextAnimation()

@@ -13313,7 +13313,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3416248286691956691, guid: 8ba881a2c58163247ad84704e59f8495, type: 3}
       propertyPath: health
-      value: 200
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416248286691956691, guid: 8ba881a2c58163247ad84704e59f8495, type: 3}
+      propertyPath: maxHealth
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 3416248286691956691, guid: 8ba881a2c58163247ad84704e59f8495, type: 3}
       propertyPath: daysSurvivedText
