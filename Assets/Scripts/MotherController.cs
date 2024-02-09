@@ -24,7 +24,8 @@ public class MotherController : MonoBehaviour, IDamageable
     
 
     [SerializeField] float speed;
-    [SerializeField] float health;
+    [SerializeField] public float health;
+    [SerializeField] public float maxHealth;
     float timeAlive;
 
     
@@ -56,6 +57,7 @@ public class MotherController : MonoBehaviour, IDamageable
     private void Start()
     {
         defaultColor = meshRenderer.material.GetColor("_FresnelColor");
+        health = maxHealth;
     }
 
     private void Update()
@@ -142,5 +144,11 @@ public class MotherController : MonoBehaviour, IDamageable
             timeAlive = 0;
             daysSurvivedText.text = "Days Survived: "+GameManager.instance.daysSurvived.ToString();
         }
+    }
+
+    public void Heal(float amount)
+    {
+        health = Mathf.Clamp(health+amount, 0, maxHealth);
+        Debug.Log("Curando");
     }
 }

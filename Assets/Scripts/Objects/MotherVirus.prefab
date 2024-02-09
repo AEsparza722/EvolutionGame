@@ -5542,6 +5542,7 @@ MonoBehaviour:
   - {fileID: 8208666114466624924}
   - {fileID: 548361681840847345}
   speed: 1000
-  health: 1000
+  health: 200
   rotationSpeed: 10
   rotationMultiplier: 500
+  daysSurvivedText: {fileID: 0}

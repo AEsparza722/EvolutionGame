@@ -207,6 +207,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     private void OnMouseUp()
     {
         FusionVirus();
+        FeedMother();
     }
 
     void FusionVirus()
@@ -229,12 +230,25 @@ public class CharacterControler : MonoBehaviour, IDamageable
                     return;
 
                 }
-
             }
-
         }
+    }
 
+    void FeedMother()
+    {
+        circleCollider.radius *= 2;
+        circleCollider.isTrigger = false;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
 
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Protect") && MotherController.instance.health < MotherController.instance.maxHealth)
+            {
+                MotherController.instance.Heal( virusData.VirusLevel * virusData.VirusLevel * 10);
+                Destroy(gameObject);
+            }
+        }
+        circleCollider.radius /= 2;
     }
 
     public void takeDamage(float damage, float force)
