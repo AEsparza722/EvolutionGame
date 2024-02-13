@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 
 public class CharacterControler : MonoBehaviour, IDamageable
 {
@@ -62,6 +64,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
         if(virusDetectionRadius.bossDetected.Count > 0 && !isMagnet)
         {
+            Debug.DrawRay(transform.position, virusDetectionRadius.bossDetected[0].transform.position - transform.position);            
             canMove = false;
             MoveToBoss();
         }
@@ -103,9 +106,8 @@ public class CharacterControler : MonoBehaviour, IDamageable
         if (isAttacking)
         {
             AttackUpdate();
-        }
+        }        
     }
-
     
     IEnumerator MoveCharacter()
     {
@@ -167,27 +169,14 @@ public class CharacterControler : MonoBehaviour, IDamageable
         movementDirection = (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized;
         rb.velocity = Vector2.zero;
         rb.AddForce(movementDirection * virusData.Speed * 10, ForceMode2D.Impulse); //Impulso
+        yield return new WaitForSeconds(.5f);
+        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(5);
         canAttack = true;
-        isAttacking = false;
-
-        //canAttack = false;
-        //List<GameObject> bossesDetected = new List<GameObject>();
-        //Collider2D[] bossColliders = Physics2D.OverlapCircleAll(transform.position, virusData.AttackRadius);
-        //foreach (Collider2D collider in bossColliders)
-        //{
-        //    if (collider.gameObject.CompareTag("Boss"))
-        //    {
-        //        bossesDetected.Add(collider.gameObject);                
-        //    }
-        //}
-        //if(bossesDetected.Count > 0)
-        //{
-        //    bossesDetected[0].GetComponent<IDamageable>().takeDamage(virusData.Damage, 0);
-        //}
-        //yield return new WaitForSeconds(5);
-        //canAttack = true;
+        isAttacking = false;               
     }
+
+    
 
     void AttackUpdate()
     {
@@ -197,27 +186,28 @@ public class CharacterControler : MonoBehaviour, IDamageable
             {
                 isAttacking = false;
                 rb.velocity = Vector2.zero;
-                Debug.Log("perrilla");
+                virusDetectionRadius.bossDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage, 0.5f);
             }
-        }        
+        }
     }
 
     bool isBlocked()
     {
-        RaycastHit2D[] hits;
-        hits = Physics2D.RaycastAll(transform.position, virusDetectionRadius.bossDetected[0].transform.position - transform.position);
+        RaycastHit2D[] hits;       
+
+        hits = Physics2D.RaycastAll(transform.position, (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized, Vector3.Distance(transform.position, virusDetectionRadius.bossDetected[0].transform.position));
         foreach (RaycastHit2D hit in hits)
         {
             if(hit.collider != null) 
             {
-                if (hit.collider.gameObject != gameObject && !hit.collider.gameObject.CompareTag("Boss"))
-                {
-                    return true;
+                if (hit.collider.gameObject != gameObject && !hit.collider.gameObject.CompareTag("Boss") && !hit.collider.gameObject.CompareTag("Area"))
+                {                    
+                    return true;                    
                 }
             }         
-        }      
+        }        
         return false;
-        //Debug.DrawLine
+        
     }
 
     void TextAnimation()

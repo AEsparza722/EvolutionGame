@@ -5168,7 +5168,7 @@ GameObject:
   - component: {fileID: 6225458399370880073}
   m_Layer: 2
   m_Name: DetectionRadius
-  m_TagString: Untagged
+  m_TagString: Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

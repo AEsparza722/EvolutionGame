@@ -36,6 +36,7 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     [SerializeField] protected float attackRadius = 3f;
     [SerializeField] protected float cooldownBasicAttack = 3f;
     protected bool canAttack = true;
+    protected bool isAttacking = false;
     protected List<GameObject> viruses = new List<GameObject>();
     GameObject virusFocus;
 
@@ -116,6 +117,9 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
 
     void ChaseVirus()
     {
+
+        if (bossDetectionRadius.virusDetected[0] == null) return;
+
         movementDirection = (bossDetectionRadius.virusDetected[0].transform.position - transform.position).normalized;
         rb.velocity = Vector2.zero;
         rb.AddForce(movementDirection * speed, ForceMode2D.Impulse);
@@ -125,31 +129,18 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     {        
         
         canAttack = false;
-        viruses = GetVirusInRange(attackRadius);
+        isAttacking = false;
+        
 
-        if (virusFocus == null && viruses.Count > 0)
+        if (bossDetectionRadius.virusDetected.Count > 0)
         {
-            virusFocus = viruses[0];
             AttackVirus();
-        }
-        else if (viruses.Count > 0 && virusFocus != null)
-        {
-            if (viruses.Contains(virusFocus))
-            {
-                AttackVirus();
-            }
-            else //Virusfocus no null pero no encontro al virus
-            {
-                virusFocus = viruses[0];
-                AttackVirus();
-            }
-        }
-        else //No encontro virusfocus
-        {
-            virusFocus = null;
-        }
-
+            yield return new WaitForSeconds(0.5f);
+            rb.velocity = Vector2.zero;
+        }       
+        
        yield return new WaitForSeconds(cooldownBasicAttack);
+        isAttacking = false;
         canAttack = true;
     }
 
@@ -178,15 +169,29 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
 
     void AttackVirus()
     {
-        virusFocus.GetComponent<IDamageable>().takeDamage(damage, 3.5f);  
-
-        if(virusFocus.GetComponent<IDamageable>().health <= 0) 
-        {
-            StartCoroutine(PostProcess.instance.DamagePostProcess(.5f, transform.position)); //DamagePost process
-            ShakeCamera.instance.ShakeCam(1, .3f, transform.position); //Shake camera, cambiar a viruses
-        }
-        
+       
+        isAttacking = true;
+        movementDirection = (bossDetectionRadius.virusDetected[0].transform.position - transform.position).normalized;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(movementDirection * speed * 20, ForceMode2D.Impulse); //Impulso
+        Debug.Log("Boss atacando");
+                 
     }
+
+
+ /*
+    void AttackUpdate()
+    {
+        if (virusDetectionRadius.bossDetected.Count > 0)
+        {
+            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) <= 2.2f)
+            {
+                isAttacking = false;
+                rb.velocity = Vector2.zero;
+                virusDetectionRadius.bossDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage, 0.5f);
+            }
+        }
+    } */
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
