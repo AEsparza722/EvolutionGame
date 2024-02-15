@@ -330,8 +330,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
         {
             takeDamage(damage, 1f);
             yield return new WaitForSeconds(seconds);
-        }              
-        
+        }        
     }           
 
     public IEnumerator KnockBack(float force)
