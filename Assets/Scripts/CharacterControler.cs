@@ -35,6 +35,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
+    float speedMultiplier = 1.0f;
 
     
 
@@ -114,7 +115,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
         canChangeDirection = false;
         movementDirection = new Vector2(Random.Range(-1f,1f), Random.Range(-1f, 1f));
         rb.velocity = Vector2.zero;
-        rb.AddForce(movementDirection*virusData.Speed,ForceMode2D.Impulse);
+        rb.AddForce(movementDirection*virusData.Speed * speedMultiplier, ForceMode2D.Impulse);
         yield return new WaitForSeconds(Random.Range(1f,5f));
         canChangeDirection = true;
                 
@@ -132,12 +133,12 @@ public class CharacterControler : MonoBehaviour, IDamageable
                 if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) > 3.5f)
                 {
                     rb.velocity = Vector2.zero;
-                    rb.AddForce(movementDirection * virusData.Speed, ForceMode2D.Impulse);
+                    rb.AddForce(movementDirection * virusData.Speed * speedMultiplier, ForceMode2D.Impulse);
                 }
                 else if(Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) < 3.5f)
                 {
                     rb.velocity = Vector2.zero;
-                    rb.AddForce(-movementDirection * virusData.Speed, ForceMode2D.Impulse);
+                    rb.AddForce(-movementDirection * virusData.Speed * speedMultiplier, ForceMode2D.Impulse);
                 }                               
             }            
         }
@@ -168,7 +169,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
         movementDirection = (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized;
         rb.velocity = Vector2.zero;
-        rb.AddForce(movementDirection * virusData.Speed * 10, ForceMode2D.Impulse); //Impulso
+        rb.AddForce(movementDirection * virusData.Speed * speedMultiplier * 10, ForceMode2D.Impulse); //Impulso
         yield return new WaitForSeconds(.5f);
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(5);
@@ -187,8 +188,15 @@ public class CharacterControler : MonoBehaviour, IDamageable
                 isAttacking = false;
                 rb.velocity = Vector2.zero;
                 virusDetectionRadius.bossDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage, 0.5f);
+                speedMultiplier = 3;
+                Invoke("SetNormalSpeed", .7f);
             }
         }
+    }
+
+    void SetNormalSpeed()
+    {
+        speedMultiplier = 1f;
     }
 
     bool isBlocked()
@@ -329,7 +337,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     public IEnumerator KnockBack(float force)
     {
         isKnockback = true;
-        rb.AddForce(-movementDirection * (virusData.Speed * force), ForceMode2D.Impulse);
+        rb.AddForce(-movementDirection * (virusData.Speed * speedMultiplier * force), ForceMode2D.Impulse);
         yield return new WaitForSeconds(.2f);
         isKnockback = false;
     }

@@ -18,8 +18,10 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     [SerializeField] float setDetectionRadius;
     [SerializeField] Color indicatorColor = Color.red;
     [SerializeField] GameObject indicatorArrowPrefab;
+    [SerializeField] GameObject basicAttackPrefab;
     public GameObject indicatorArrow;
     Animator animator;
+
 
     
 
@@ -117,30 +119,41 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
 
     void ChaseVirus()
     {
-
-        if (bossDetectionRadius.virusDetected[0] == null) return;
-
         movementDirection = (bossDetectionRadius.virusDetected[0].transform.position - transform.position).normalized;
         rb.velocity = Vector2.zero;
         rb.AddForce(movementDirection * speed, ForceMode2D.Impulse);
     }
-    
-    IEnumerator BasicAttack()
-    {        
-        
-        canAttack = false;
-        isAttacking = false;
-        
 
-        if (bossDetectionRadius.virusDetected.Count > 0)
+    IEnumerator BasicAttack()
+    {
+
+        canAttack = false;
+        viruses = GetVirusInRange(attackRadius);
+        Debug.Log("jijiij");
+
+        if (virusFocus == null && viruses.Count > 0)
         {
+            virusFocus = viruses[0];
             AttackVirus();
-            yield return new WaitForSeconds(0.5f);
-            rb.velocity = Vector2.zero;
-        }       
-        
-       yield return new WaitForSeconds(cooldownBasicAttack);
-        isAttacking = false;
+        }
+        else if (viruses.Count > 0 && virusFocus != null)
+        {
+            if (viruses.Contains(virusFocus))
+            {
+                AttackVirus();
+            }
+            else //Virusfocus no null pero no encontro al virus
+            {
+                virusFocus = viruses[0];
+                AttackVirus();
+            }
+        }
+        else //No encontro virusfocus
+        {
+            virusFocus = null;
+        }
+
+        yield return new WaitForSeconds(cooldownBasicAttack);
         canAttack = true;
     }
 
@@ -168,30 +181,18 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     }
 
     void AttackVirus()
-    {
-       
-        isAttacking = true;
-        movementDirection = (bossDetectionRadius.virusDetected[0].transform.position - transform.position).normalized;
-        rb.velocity = Vector2.zero;
-        rb.AddForce(movementDirection * speed * 20, ForceMode2D.Impulse); //Impulso
-        Debug.Log("Boss atacando");
-                 
-    }
+    {        
+        GameObject basicAttack = Instantiate(basicAttackPrefab, transform.position, Quaternion.identity);
+        basicAttack.GetComponent<BossBasicAttack>().Initialize(basicAttack.transform, virusFocus.transform, 5f, 10f, damage);
+        Debug.Log("lalala");
 
-
- /*
-    void AttackUpdate()
-    {
-        if (virusDetectionRadius.bossDetected.Count > 0)
+        if (virusFocus.GetComponent<IDamageable>().health <= 0)
         {
-            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) <= 2.2f)
-            {
-                isAttacking = false;
-                rb.velocity = Vector2.zero;
-                virusDetectionRadius.bossDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage, 0.5f);
-            }
+            StartCoroutine(PostProcess.instance.DamagePostProcess(.5f, transform.position)); //DamagePost process
+            ShakeCamera.instance.ShakeCam(1, .3f, transform.position); //Shake camera, cambiar a viruses
         }
-    } */
+
+    } 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
