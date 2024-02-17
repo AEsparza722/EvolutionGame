@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Magnet : MonoBehaviour
 {
-    bool isFusion;
-    CharacterControler virus1Pos, virus2Pos;
+    [SerializeField] bool isFusion;
+    [SerializeField] CharacterControler virus1Pos, virus2Pos;
     Vector3 magnetPos;
 
     private void Start()
@@ -21,11 +21,12 @@ public class Magnet : MonoBehaviour
         
         if (isFusion && virus1Pos != null && virus2Pos != null)
         {
-            if ((virus1Pos.transform.position - magnetPos).magnitude <= 0.3f)
+            if (Vector2.Distance(virus1Pos.transform.position, transform.position) <= 0.8f)
             {
+                isFusion = false;
                 virus1Pos.rb.velocity = Vector2.zero;
                 virus2Pos.rb.velocity = Vector2.zero;
-
+                Debug.Log("Fusion");
                 Invoke("FusionVirusMagnet", .5f);
                                                
             }

@@ -129,7 +129,6 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
 
         canAttack = false;
         viruses = GetVirusInRange(attackRadius);
-        Debug.Log("jijiij");
 
         if (virusFocus == null && viruses.Count > 0)
         {
@@ -184,7 +183,6 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     {        
         GameObject basicAttack = Instantiate(basicAttackPrefab, transform.position, Quaternion.identity);
         basicAttack.GetComponent<BossBasicAttack>().Initialize(basicAttack.transform, virusFocus.transform, 5f, 10f, damage);
-        Debug.Log("lalala");
 
         if (virusFocus.GetComponent<IDamageable>().health <= 0)
         {

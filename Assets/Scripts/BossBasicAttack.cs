@@ -21,7 +21,6 @@ public class BossBasicAttack : MonoBehaviour
     {
         if (targetPosition != null)
         {
-            Debug.Log(currentDistance);
             if (isAttacking && IsMaxDistance())
             {
                 rb.velocity = Vector2.zero;
@@ -41,8 +40,7 @@ public class BossBasicAttack : MonoBehaviour
         this.initialPosition = initialPosition;
         this.targetPosition = targetPosition;
         this.maxDistance = maxDistance;
-        this.damage = damage;
-        Debug.Log("initialize");
+        this.damage = damage;       
     }
 
     bool IsMaxDistance()
@@ -53,9 +51,12 @@ public class BossBasicAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == targetPosition.gameObject)
+        if (targetPosition != null)
         {
-            collision.gameObject.GetComponent<IDamageable>().takeDamage(damage, 10f);
+            if (collision.gameObject == targetPosition.gameObject)
+            {
+                collision.gameObject.GetComponent<IDamageable>().takeDamage(damage, 10f);
+            }
         }
     }
 }
