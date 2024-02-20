@@ -9,6 +9,8 @@ TagManager:
   - Spawner
   - Protect
   - Area
+  - EnemyMother
+  - EnemyVirus
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ClickDamage
   m_EditorClassIdentifier: 
   Name: ClickDamage
-  Cost: 2
+  Cost: 50
   Level: 0
   CostMultiplier: 2
   Icon: {fileID: 803220956401320507, guid: da75b6bbeb3bb5e45b08349bd1fede83, type: 3}

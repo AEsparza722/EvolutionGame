@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8695318374111850644}
   - component: {fileID: 5874535119512313582}
-  - component: {fileID: 986618676410960590}
+  - component: {fileID: 3504622105076939023}
   m_Layer: 2
   m_Name: DetectionRadius
   m_TagString: Untagged
@@ -99,8 +99,8 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 15
---- !u!114 &986618676410960590
+  m_Radius: 5
+--- !u!114 &3504622105076939023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,10 +109,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 738963370399370395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b4866a3d0e726945adfc772dce1bd26, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f9ac0e58e4101640ae6c31db6fc412f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossDetected: []
+  normalVirusDetected: []
 --- !u!1 &1866725942873063211
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f972e1222c3d59a4da24b81789f18df6, type: 2}
+  - {fileID: 2100000, guid: f8197f95967926844a3c173ac57af118, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5408,10 +5408,10 @@ GameObject:
   - component: {fileID: 3834150327661469008}
   - component: {fileID: 1531215598788425186}
   - component: {fileID: 8460746621593943513}
-  - component: {fileID: 3416248286691956691}
+  - component: {fileID: -2655212514110306341}
   m_Layer: 0
-  m_Name: MotherVirus
-  m_TagString: Protect
+  m_Name: EnemyMother
+  m_TagString: EnemyMother
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5521,7 +5521,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3416248286691956691
+--- !u!114 &-2655212514110306341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5530,20 +5530,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8789001809645850492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12871e7c09367f442a17248d632edb7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fa12b0af7fcd364b9d08df4aeaebd9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   circleCollider: {fileID: 0}
-  virusDetectionRadius: {fileID: 986618676410960590}
-  setDetectionRadius: 15
-  spawnObjects:
-  - {fileID: 8514254660914815731}
-  - {fileID: 7171645519783012967}
-  - {fileID: 8208666114466624924}
-  - {fileID: 548361681840847345}
-  speed: 1000
-  health: 1000
-  maxHealth: 1000
+  virusDetectionRadius: {fileID: 0}
+  setDetectionRadius: 8
+  spawnObjects: []
+  speed: 500
+  health: 200
+  maxHealth: 200
   rotationSpeed: 10
   rotationMultiplier: 500
-  daysSurvivedText: {fileID: 0}

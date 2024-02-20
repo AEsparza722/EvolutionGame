@@ -8,7 +8,7 @@ public class VirusAreaDetection : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Boss"))
+        if (collision.transform.CompareTag("Boss") || collision.transform.CompareTag("EnemyMother") || collision.transform.CompareTag("EnemyVirus"))
         {
             if (!bossDetected.Contains(collision.gameObject))
             {
@@ -19,7 +19,7 @@ public class VirusAreaDetection : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Boss"))
+        if (collision.transform.CompareTag("Boss") || collision.transform.CompareTag("EnemyMother") || collision.transform.CompareTag("EnemyVirus"))
         {
             bossDetected.Remove(collision.gameObject);
         }

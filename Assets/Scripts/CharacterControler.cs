@@ -95,7 +95,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
         if (canAttack && virusDetectionRadius.bossDetected.Count != 0 && !isBlocked())
         {
-            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) < 4f)
+            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) < 5.5f)
                 StartCoroutine(AttackBoss());
         }
 
@@ -187,7 +187,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
             {
                 isAttacking = false;
                 rb.velocity = Vector2.zero;
-                virusDetectionRadius.bossDetected[0].GetComponent<BossController>().takeDamage(virusData.Damage, 0.5f);
+                virusDetectionRadius.bossDetected[0].GetComponent<IDamageable>().takeDamage(virusData.Damage, 0.5f);
                 speedMultiplier = 3;
                 Invoke("SetNormalSpeed", .7f);
             }
@@ -208,7 +208,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
         {
             if(hit.collider != null) 
             {
-                if (hit.collider.gameObject != gameObject && !hit.collider.gameObject.CompareTag("Boss") && !hit.collider.gameObject.CompareTag("Area"))
+                if (hit.collider.gameObject != gameObject && !hit.collider.gameObject.CompareTag("Boss") && !hit.collider.gameObject.CompareTag("Area") && !hit.collider.gameObject.CompareTag("EnemyMother") && !hit.collider.gameObject.CompareTag("EnemyVirus"))
                 {                    
                     return true;                    
                 }

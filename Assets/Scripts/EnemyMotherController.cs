@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using TMPro;
 
-public class MotherController : MonoBehaviour, IDamageable
+public class EnemyMotherController : MonoBehaviour, IDamageable
 {
 
     float IDamageable.health { get => health; set => health = value; }
 
-    public static MotherController instance;
+    public static EnemyMotherController instance;
     Vector2 movementDirection;
     bool canChangeDirection = true;
     bool canMove = true;
     public CircleCollider2D circleCollider;
     Rigidbody2D rb;
     MeshRenderer meshRenderer;
-    [SerializeField] VirusAreaDetection virusDetectionRadius;
+    [SerializeField] EnemyMotherDetection virusDetectionRadius;
     [SerializeField] float setDetectionRadius;
     Color defaultColor;
     
@@ -26,12 +25,9 @@ public class MotherController : MonoBehaviour, IDamageable
     [SerializeField] float speed;
     [SerializeField] public float health;
     [SerializeField] public float maxHealth;
-    float timeAlive;
-
-    
+        
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
-    [SerializeField] TMP_Text daysSurvivedText;
 
     private void Awake()
     {        
@@ -48,10 +44,8 @@ public class MotherController : MonoBehaviour, IDamageable
         rb = GetComponent<Rigidbody2D>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
-        virusDetectionRadius = GetComponentInChildren<VirusAreaDetection>();
+        virusDetectionRadius = GetComponentInChildren<EnemyMotherDetection>();
         virusDetectionRadius.gameObject.GetComponent<CircleCollider2D>().radius = setDetectionRadius;
-            
-
     }
 
     private void Start()
@@ -62,13 +56,19 @@ public class MotherController : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        spawnObjects[0].transform.parent.gameObject.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+       
 
         if (canChangeDirection && canMove)
         {
             StartCoroutine(MoveCharacter());
         }
-        
+
+        if (virusDetectionRadius.normalVirusDetected.Count > 0)
+        {
+            canMove = false;
+            Escape();
+        }
+
         //Rotation
         Quaternion rotationDir = Quaternion.Euler(
             movementDirection.x * rotationMultiplier,
@@ -82,8 +82,6 @@ public class MotherController : MonoBehaviour, IDamageable
             rotationDir,
             rotationSpeed * Time.deltaTime
         );
-
-        TimeAlive();
     }
 
     IEnumerator MoveCharacter()
@@ -96,18 +94,25 @@ public class MotherController : MonoBehaviour, IDamageable
         canChangeDirection = true;
     }
 
+    void Escape()
+    {
+        canChangeDirection = false;
+        movementDirection = (transform.position - virusDetectionRadius.normalVirusDetected[0].transform.position).normalized;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(movementDirection * speed, ForceMode2D.Impulse);
+    }
+
     public void takeDamage(float damage, float force)
     {
         health -= damage;
 
-        //Debug.Log(health);
+      
 
         StartCoroutine(ChangeColorDamage());
         StartCoroutine(KnockBack(0));
 
         if (health <= 0)
-        {
-            GameManager.instance.GameOver();
+        {            
             Destroy(gameObject);
         }
     }
@@ -135,20 +140,4 @@ public class MotherController : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(.2f);
     }
 
-    void TimeAlive()
-    {
-        timeAlive += Time.deltaTime;
-        if(timeAlive >= 10)
-        {
-            GameManager.instance.daysSurvived += 1;
-            timeAlive = 0;
-            daysSurvivedText.text = "Days Survived: "+GameManager.instance.daysSurvived.ToString();
-        }
-    }
-
-    public void Heal(float amount)
-    {
-        health = Mathf.Clamp(health+amount, 0, maxHealth);
-        Debug.Log("Curando");
-    }
 }

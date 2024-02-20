@@ -7,6 +7,7 @@ public class BossBasicAttack : MonoBehaviour
     Rigidbody2D rb;
     float maxDistance;
     bool isAttacking;
+    bool targetHit;
     float currentDistance = 0;
     Transform initialPosition;
     Transform targetPosition;
@@ -50,12 +51,13 @@ public class BossBasicAttack : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
+    {        
         if (targetPosition != null)
         {
-            if (collision.gameObject == targetPosition.gameObject)
+            if (collision.gameObject == targetPosition.gameObject && !targetHit)
             {
                 collision.gameObject.GetComponent<IDamageable>().takeDamage(damage, 10f);
+                targetHit = true;
             }
         }
     }

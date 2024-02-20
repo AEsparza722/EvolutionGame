@@ -79,7 +79,7 @@ public class BossSystem : MonoBehaviour
             countDown = Mathf.Clamp(countDown, 0, countDown);
             countDownText.text = "BOSS INCOMING IN " + countDown.ToString("F1");
             yield return new WaitForSeconds(.10f);
-            Debug.Log(countDown);
+            
         }
 
         countDownText.gameObject.SetActive(false);
