@@ -12,6 +12,7 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
     Vector2 movementDirection;
     bool canChangeDirection = true;
     bool canMove = true;
+    bool canSpawn = true;
     public CircleCollider2D circleCollider;
     Rigidbody2D rb;
     MeshRenderer meshRenderer;
@@ -20,12 +21,16 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
     Color defaultColor;
     
     public List<GameObject> spawnObjects = new List<GameObject>();
-    
+    [SerializeField] GameObject childEnemy;
+    [SerializeField] List<GameObject> childCount = new List<GameObject>();
+    [SerializeField] int maxChildren;
+
 
     [SerializeField] float speed;
     [SerializeField] public float health;
     [SerializeField] public float maxHealth;
-        
+    [SerializeField] float spawnCooldown;
+            
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
 
@@ -68,6 +73,24 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
             canMove = false;
             Escape();
         }
+
+        if (canSpawn)
+        {
+            if (childCount.Count < maxChildren)
+            {
+                StartCoroutine(SpawnChildrenEnemy());
+            }                            
+        }
+
+        for (int i = 0; i < childCount.Count; i++)
+        {            
+            if (childCount[i] == null)
+            {
+                childCount.RemoveAt(i);
+                i--;
+            }
+        }
+        
 
         //Rotation
         Quaternion rotationDir = Quaternion.Euler(
@@ -115,6 +138,30 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
         {            
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator SpawnChildrenEnemy()
+    {
+        
+        canSpawn = false;
+        foreach (GameObject obj in spawnObjects)
+        {            
+            if(obj.transform.position.x >= GameManager.instance.gameArea.x / 2 || obj.transform.position.y >= GameManager.instance.gameArea.y / 2)
+            {
+                continue;
+            }
+            if (obj.transform.position.x <= -GameManager.instance.gameArea.x / 2 || obj.transform.position.y <= -GameManager.instance.gameArea.y / 2)
+            {
+                continue;
+            }
+
+            childCount.Add(Instantiate(childEnemy, obj.transform.position, Quaternion.identity));
+            yield return new WaitForSeconds(.5f);
+            if (childCount.Count >= maxChildren) break;
+
+        }
+        yield return new WaitForSeconds(spawnCooldown);
+        canSpawn = true;
     }
 
     public IEnumerator takeDamageOverTime(float damage, float times, float seconds)

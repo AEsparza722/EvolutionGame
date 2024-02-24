@@ -65,7 +65,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
         if(virusDetectionRadius.bossDetected.Count > 0 && !isMagnet)
         {
-            Debug.DrawRay(transform.position, virusDetectionRadius.bossDetected[0].transform.position - transform.position);            
+            Debug.DrawRay(transform.position, virusDetectionRadius.GetNearbyEnemy().transform.position - transform.position);            
             canMove = false;
             MoveToBoss();
         }
@@ -95,7 +95,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
         if (canAttack && virusDetectionRadius.bossDetected.Count != 0 && !isBlocked())
         {
-            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) < 5.5f)
+            if (Vector2.Distance(virusDetectionRadius.GetNearbyEnemy().transform.position, transform.position) < 5.5f)
                 StartCoroutine(AttackBoss());
         }
 
@@ -124,18 +124,18 @@ public class CharacterControler : MonoBehaviour, IDamageable
     void MoveToBoss()
     {
         
-            movementDirection = (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized;
+            movementDirection = (virusDetectionRadius.GetNearbyEnemy().transform.position - transform.position).normalized;
             
         if (!isKnockback)
         {
             if (!isMagnet && !isAttacking)
             {
-                if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) > 3.5f)
+                if (Vector2.Distance(virusDetectionRadius.GetNearbyEnemy().transform.position, transform.position) > 3.5f)
                 {
                     rb.velocity = Vector2.zero;
                     rb.AddForce(movementDirection * virusData.Speed * speedMultiplier, ForceMode2D.Impulse);
                 }
-                else if(Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) < 3.5f)
+                else if(Vector2.Distance(virusDetectionRadius.GetNearbyEnemy().transform.position, transform.position) < 3.5f)
                 {
                     rb.velocity = Vector2.zero;
                     rb.AddForce(-movementDirection * virusData.Speed * speedMultiplier, ForceMode2D.Impulse);
@@ -167,7 +167,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
         canAttack = false;
         isAttacking = true;
 
-        movementDirection = (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized;
+        movementDirection = (virusDetectionRadius.GetNearbyEnemy().transform.position - transform.position).normalized;
         rb.velocity = Vector2.zero;
         rb.AddForce(movementDirection * virusData.Speed * speedMultiplier * 10, ForceMode2D.Impulse); //Impulso
         yield return new WaitForSeconds(.5f);
@@ -183,11 +183,11 @@ public class CharacterControler : MonoBehaviour, IDamageable
     {
         if (virusDetectionRadius.bossDetected.Count > 0)
         {
-            if (Vector2.Distance(virusDetectionRadius.bossDetected[0].transform.position, transform.position) <= 2.2f)
+            if (Vector2.Distance(virusDetectionRadius.GetNearbyEnemy().transform.position, transform.position) <= 2.2f)
             {
                 isAttacking = false;
                 rb.velocity = Vector2.zero;
-                virusDetectionRadius.bossDetected[0].GetComponent<IDamageable>().takeDamage(virusData.Damage, 0.5f);
+                virusDetectionRadius.GetNearbyEnemy().GetComponent<IDamageable>().takeDamage(virusData.Damage, 0.5f);
                 speedMultiplier = 3;
                 Invoke("SetNormalSpeed", .7f);
             }
@@ -203,7 +203,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     {
         RaycastHit2D[] hits;       
 
-        hits = Physics2D.RaycastAll(transform.position, (virusDetectionRadius.bossDetected[0].transform.position - transform.position).normalized, Vector3.Distance(transform.position, virusDetectionRadius.bossDetected[0].transform.position));
+        hits = Physics2D.RaycastAll(transform.position, (virusDetectionRadius.GetNearbyEnemy().transform.position - transform.position).normalized, Vector3.Distance(transform.position, virusDetectionRadius.GetNearbyEnemy().transform.position));
         foreach (RaycastHit2D hit in hits)
         {
             if(hit.collider != null) 
@@ -347,4 +347,5 @@ public class CharacterControler : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(.3f);
         meshRenderer.material.SetColor("_FresnelColor", defaultColor);
     }
+
 }

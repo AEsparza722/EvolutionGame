@@ -5275,6 +5275,7 @@ MonoBehaviour:
   setDetectionRadius: 18
   indicatorColor: {r: 1, g: 0, b: 0, a: 1}
   indicatorArrowPrefab: {fileID: 7794831550548764126, guid: b1ffe956bb367ce47a61bf08b1f395ea, type: 3}
+  basicAttackPrefab: {fileID: 2797518405064893867, guid: 3c9195303b83c0642a959d4db4d657ea, type: 3}
   indicatorArrow: {fileID: 0}
   canMove: 1
   rotationSpeed: 10

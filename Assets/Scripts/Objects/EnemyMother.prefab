@@ -5536,9 +5536,17 @@ MonoBehaviour:
   circleCollider: {fileID: 0}
   virusDetectionRadius: {fileID: 0}
   setDetectionRadius: 8
-  spawnObjects: []
+  spawnObjects:
+  - {fileID: 8514254660914815731}
+  - {fileID: 7171645519783012967}
+  - {fileID: 8208666114466624924}
+  - {fileID: 548361681840847345}
+  childEnemy: {fileID: 8789001809645850492, guid: ab50629dafbdf5347b1ff3f89483ecb2, type: 3}
+  childCount: []
+  maxChildren: 6
   speed: 500
   health: 200
   maxHealth: 200
+  spawnCooldown: 10
   rotationSpeed: 10
   rotationMultiplier: 500
