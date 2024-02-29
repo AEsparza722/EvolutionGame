@@ -30,6 +30,7 @@ public class EnemyVirus : MonoBehaviour, IDamageable
 
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
+    [SerializeField] float weaknessDivider;
     float speedMultiplier = 1.0f;
 
 
@@ -195,7 +196,7 @@ public class EnemyVirus : MonoBehaviour, IDamageable
         gameObject.name = virusData.Name;
 
         //Health
-        health = virusData.Health / 2;
+        health = virusData.Health / weaknessDivider;
 
         //Mesh
         gameObject.GetComponentInChildren<MeshFilter>().mesh = virusData.VirusMesh;

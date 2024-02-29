@@ -15,6 +15,11 @@ public class EnemySystem : MonoBehaviour
         {
             SpawnMother();
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SpawnMother();
+        }
     }
 
     void SpawnMother() 

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ed9d85fa958a5b42979db859bcd9f75, type: 3}
-  m_Name: Magnet
+  m_Name: GeneticUpgrade
   m_EditorClassIdentifier: 
-  Name: Magnet
+  Name: GeneticUpgrade
   Cost: 2
   Level: 1
   CostMultiplier: 2
-  Icon: {fileID: 1535325516486818496, guid: 8903df8841dd6ff468936f7fbfb74be6, type: 3}
+  Icon: {fileID: 5512142722812817100, guid: fcf4cac2454f37f46a27725f05e67595, type: 3}
   Description: 
-  CurrentEffect: 10
-  MultiplierEffect: 2
+  CurrentEffect: 1
+  MultiplierEffect: 1

@@ -19,7 +19,7 @@ public class Magnet : MonoBehaviour
     private void Update()
     {
         
-        if (isFusion && virus1Pos != null && virus2Pos != null)
+        if (isFusion && virus1Pos != null && virus2Pos != null )
         {
             if (Vector2.Distance(virus1Pos.transform.position, transform.position) <= 0.8f)
             {

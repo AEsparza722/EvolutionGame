@@ -5543,7 +5543,7 @@ MonoBehaviour:
   - {fileID: 548361681840847345}
   childEnemy: {fileID: 8789001809645850492, guid: ab50629dafbdf5347b1ff3f89483ecb2, type: 3}
   childCount: []
-  maxChildren: 6
+  maxChildren: 3
   speed: 500
   health: 200
   maxHealth: 200

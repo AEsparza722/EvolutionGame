@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pauseUI;
     public int daysSurvived;    
     public int maxDaysSurvived;
+    public int maxVirusLevel = 2;
 
         
 

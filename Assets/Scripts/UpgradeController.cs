@@ -96,6 +96,10 @@ public class UpgradeController : MonoBehaviour
                     upgradeInstance.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => UpgradeClickDamage(upgradeItem));
                     upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
                     break;
+                case "GeneticUpgrade":
+                    upgradeInstance.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => GeneticUpgrade(upgradeItem));
+                    upgradeInstance.transform.GetChild(4).GetChild(0).GetComponent<TMP_Text>().text = (upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level)).ToString();
+                    break;
             }
         }
     }
@@ -175,6 +179,26 @@ public class UpgradeController : MonoBehaviour
             upgradeItem.Level++;
             GameManager.instance.UpdateCoins(-cost);
             canClickDamage = true;
+
+        }
+        else
+        {
+            Debug.Log("No te alcanza");
+        }
+        UpdateUpgrades();
+    }
+
+    void GeneticUpgrade(UpgradeData upgradeItem)
+    {
+        float cost = upgradeItem.Cost + (upgradeItem.Cost * upgradeItem.Level);
+        Debug.Log(cost);
+
+
+        if (GameManager.instance.coins >= cost)
+        {
+            upgradeItem.Level++;
+            GameManager.instance.maxVirusLevel++;
+            GameManager.instance.UpdateCoins(-cost);            
 
         }
         else

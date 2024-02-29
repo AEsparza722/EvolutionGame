@@ -18,7 +18,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     bool canIncreaseCoins = true;
     public bool canMove = true;
     bool isKnockback;
-    public bool isMagnet;
+    public bool isMagnet;   
     bool canAttack = true;
     bool isAttacking = false;
     public VirusData virusData;
@@ -28,6 +28,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     MeshRenderer meshRenderer;
     [SerializeField] VirusAreaDetection virusDetectionRadius;
     [SerializeField] float setDetectionRadius;
+    [SerializeField] TMP_Text maxLevelText;
     
 
     Color defaultColor;
@@ -54,6 +55,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     {
         UpdateVirusData();
         defaultColor = meshRenderer.material.GetColor("_FresnelColor");
+        maxLevelText = GameObject.FindGameObjectWithTag("MaxLevelReachedText").GetComponent<TMP_Text>();
     }
 
     private void Update()
@@ -223,6 +225,11 @@ public class CharacterControler : MonoBehaviour, IDamageable
         LeanTween.scale(coinsText.rectTransform, new Vector3(-1, 1, 1), .3f).setEase(LeanTweenType.easeInOutSine).setOnComplete(() => { LeanTween.scale(coinsText.rectTransform, new Vector3(0, 0, 0), .3f).setEase(LeanTweenType.easeInOutSine).setDelay(.3f); });
     }
 
+    void TextMaxLevelReached()
+    {
+        LeanTween.scale(maxLevelText.rectTransform, new Vector3(1,1,1), .3f).setEase(LeanTweenType.easeInOutSine).setOnComplete(() => { LeanTween.scale(maxLevelText.rectTransform, new Vector3(0, 0, 0), .3f).setEase(LeanTweenType.easeInOutSine).setDelay(1f); });
+    }
+
 
     public void UpdateVirusData()
     {
@@ -244,12 +251,19 @@ public class CharacterControler : MonoBehaviour, IDamageable
     }
 
     private void OnMouseDrag()
-    {        
-        Vector2 mouseDrag = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDrag.x = Mathf.Clamp(mouseDrag.x, -GameManager.instance.gameArea.x -5, GameManager.instance.gameArea.x -5);
-        mouseDrag.y = Mathf.Clamp(mouseDrag.y, -GameManager.instance.gameArea.y - 5, GameManager.instance.gameArea.y - 5);
-        Vector2 mouseOffset = mouseDrag - initialMousePosition;
-        transform.position = initialObjectPosition + mouseOffset;           
+    {
+        if (!isMagnet)
+        {
+            Vector2 mouseDrag = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseDrag.x = Mathf.Clamp(mouseDrag.x, -GameManager.instance.gameArea.x - 5, GameManager.instance.gameArea.x - 5);
+            mouseDrag.y = Mathf.Clamp(mouseDrag.y, -GameManager.instance.gameArea.y - 5, GameManager.instance.gameArea.y - 5);
+            Vector2 mouseOffset = mouseDrag - initialMousePosition;
+            transform.position = initialObjectPosition + mouseOffset;
+
+        }
+        else { return; 
+        }
+        
     }
     private void OnMouseDown()
     {
@@ -259,7 +273,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     }
     private void OnMouseUp()
     {
-        FusionVirus();
+        FusionVirus();                
         FeedMother();
     }
 
@@ -267,24 +281,48 @@ public class CharacterControler : MonoBehaviour, IDamageable
     {
         circleCollider.radius *= 2;
         circleCollider.isTrigger = false;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
 
-        foreach (Collider2D collider in colliders)
+        if (virusData.VirusLevel < GameManager.instance.maxVirusLevel)
         {
-            if (collider.CompareTag("Virus") && collider.gameObject != gameObject)
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
+
+            foreach (Collider2D collider in colliders)
             {
-                if (collider.gameObject.GetComponent<CharacterControler>().virusData.VirusLevel == virusData.VirusLevel)
+                if (collider.CompareTag("Virus") && collider.gameObject != gameObject)
                 {
-                    Destroy(collider.gameObject);
-                    virusData = VirusManager.instance.NextVirus(virusData);
-                    UpdateVirusData();
-                    
+                    if (collider.gameObject.GetComponent<CharacterControler>().virusData.VirusLevel == virusData.VirusLevel)
+                    {
+                        Destroy(collider.gameObject);
+                        virusData = VirusManager.instance.NextVirus(virusData);
+                        UpdateVirusData();
 
-                    return;
 
+                        return;
+
+                    }
                 }
             }
         }
+        else
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
+
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.CompareTag("Virus") && collider.gameObject != gameObject)
+                {
+                    if (collider.gameObject.GetComponent<CharacterControler>().virusData.VirusLevel == virusData.VirusLevel)
+                    {
+                        TextMaxLevelReached();
+                        return;
+
+                    }
+                }
+            }
+
+            
+        }
+        
     }
 
     void FeedMother()

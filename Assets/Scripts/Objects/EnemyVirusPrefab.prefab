@@ -5360,3 +5360,4 @@ MonoBehaviour:
   setDetectionRadius: 8
   rotationSpeed: 10
   rotationMultiplier: 500
+  weaknessDivider: 3
