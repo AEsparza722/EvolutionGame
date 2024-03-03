@@ -9,6 +9,9 @@ public class MotherController : MonoBehaviour, IDamageable
 
     float IDamageable.health { get => health; set => health = value; }
 
+    public float colorSaturation { get => ColorSaturation; set => ColorSaturation = value; }
+    float ColorSaturation;
+
     public static MotherController instance;
     Vector2 movementDirection;
     bool canChangeDirection = true;
@@ -84,6 +87,7 @@ public class MotherController : MonoBehaviour, IDamageable
         );
 
         TimeAlive();
+        ColorOverLife();
     }
 
     IEnumerator MoveCharacter()
@@ -150,5 +154,28 @@ public class MotherController : MonoBehaviour, IDamageable
     {
         health = Mathf.Clamp(health+amount, 0, maxHealth);
         Debug.Log("Curando");
+    }
+
+    public void ColorOverLife()
+    {
+        ColorSaturation = (health / maxHealth) * 1;
+
+        float maxClamp = Mathf.Clamp(ColorSaturation, .2f, 1f);
+        float colorHue;
+
+        float colorS;
+        float colorValue;
+        Color.RGBToHSV(meshRenderer.material.GetColor("_AlbedoColor"), out colorHue, out colorS, out colorValue);
+   
+        meshRenderer.material.SetColor("_AlbedoColor", Color.HSVToRGB(colorHue, ColorSaturation, colorValue));
+        meshRenderer.material.SetFloat("_Max", maxClamp);
+        if (ColorSaturation < 0.5)
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 0);
+        }
+        else
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 1);
+        }
     }
 }

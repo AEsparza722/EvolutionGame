@@ -5367,6 +5367,7 @@ MonoBehaviour:
   damage: 50
   health: 300
   speed: 1000
+  maxHealth: 300
   fusionParticle: {fileID: 0}
 --- !u!95 &4683170125304856523
 Animator:

@@ -34,7 +34,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: EnemyMother
-  m_Shader: {fileID: -6465566751694194690, guid: c70bab8dfdd59804ca819bfd7c41832b, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0a2c7b9381bf2694a9e285b3efca22bf, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -82,6 +82,7 @@ Material:
     - _SineTime: 0.73
     - _SpeedH: 1
     - _TimeVar: 0
+    - _UseFresnel: 1
     m_Colors:
     - _AlbedoColor: {r: 1.8626361, g: 0, b: 1.7274605, a: 0}
     - _BColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 0}

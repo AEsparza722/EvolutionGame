@@ -73,14 +73,15 @@ Material:
     - _FrequencyB: 0.854
     - _FrequencyVariation: 1.5
     - _FresnelPower: 4.2
-    - _Max: 2
-    - _Min: 0.2
+    - _Max: 1
+    - _Min: 0
     - _NormalIntensity: 0.46
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SineTime: 0.73
     - _SpeedH: 1
     - _TimeVar: 0
+    - _UseFresnel: 1
     m_Colors:
     - _AlbedoColor: {r: 2.1747942, g: 0, b: 0, a: 0}
     - _BColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 0}

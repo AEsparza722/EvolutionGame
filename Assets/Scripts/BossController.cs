@@ -9,6 +9,9 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     public Color color { get => indicatorColor; set => indicatorColor = value; }
     public bool isActive { get => indicatorActive; set => indicatorActive = value; }
 
+    public float colorSaturation { get => ColorSaturation; set => ColorSaturation = value; }
+    float ColorSaturation;
+
     float IDamageable.health { get => health; set => health = value; }
 
     [Header("Components")]
@@ -21,6 +24,7 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     [SerializeField] GameObject basicAttackPrefab;
     public GameObject indicatorArrow;
     Animator animator;
+    MeshRenderer meshRenderer;
 
 
     
@@ -45,7 +49,8 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     [Header("Stats")]
     public float damage;
     public float health;
-    public float speed;    
+    public float speed;
+    public float maxHealth;
 
     [Header("Effects")]
     [SerializeField] ParticleSystem fusionParticle;
@@ -59,6 +64,8 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
         bossDetectionRadius.gameObject.GetComponent<CircleCollider2D>().radius = setDetectionRadius;
         indicatorArrow = Instantiate(indicatorArrowPrefab);
         indicatorArrow.GetComponent<SpriteRenderer>().color = indicatorColor;
+        health = maxHealth;
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
     public virtual void UpdateBoss()
@@ -84,6 +91,8 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
         }
 
         Detect();
+
+        ColorOverLife();
 
         //Rotation
         // Generate random rotation for each axis
@@ -274,5 +283,28 @@ public class BossController : MonoBehaviour, IIndicator, IDamageable
     public IEnumerator ChangeColorDamage()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void ColorOverLife()
+    {        
+        ColorSaturation = (health / maxHealth) * 1;
+
+        float maxClamp = Mathf.Clamp(ColorSaturation, .2f, 1f);
+        float colorHue;
+
+        float colorS;
+        float colorValue;
+        Color.RGBToHSV(meshRenderer.material.GetColor("_AlbedoColor"), out colorHue, out colorS, out colorValue);
+       
+        meshRenderer.material.SetColor("_AlbedoColor", Color.HSVToRGB(colorHue, ColorSaturation, colorValue));
+        meshRenderer.material.SetFloat("_Max", maxClamp);
+        if (ColorSaturation < 0.5)
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 0);
+        }
+        else
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 1);
+        }
     }
 }

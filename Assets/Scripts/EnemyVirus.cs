@@ -8,6 +8,8 @@ using Unity.VisualScripting;
 public class EnemyVirus : MonoBehaviour, IDamageable
 {
     float IDamageable.health { get => health; set => health = value; }
+    public float colorSaturation { get => ColorSaturation; set => ColorSaturation = value; }
+    float ColorSaturation;
 
     Vector2 movementDirection;
     public Rigidbody2D rb;
@@ -94,6 +96,8 @@ public class EnemyVirus : MonoBehaviour, IDamageable
         {
             AttackUpdate();
         }
+
+        ColorOverLife();
     }
 
     IEnumerator MoveCharacter()
@@ -245,5 +249,28 @@ public class EnemyVirus : MonoBehaviour, IDamageable
         meshRenderer.material.SetColor("_FresnelColor", Color.red);
         yield return new WaitForSeconds(.3f);
         meshRenderer.material.SetColor("_FresnelColor", defaultColor);
+    }
+
+    public void ColorOverLife()
+    {
+        ColorSaturation = (health / virusData.Health) * 1;
+
+        float maxClamp = Mathf.Clamp(ColorSaturation, .2f, 1f);
+        float colorHue;
+
+        float colorS;
+        float colorValue;
+        Color.RGBToHSV(meshRenderer.material.GetColor("_AlbedoColor"), out colorHue, out colorS, out colorValue);
+ 
+        meshRenderer.material.SetColor("_AlbedoColor", Color.HSVToRGB(colorHue, ColorSaturation, colorValue));
+        meshRenderer.material.SetFloat("_Max", maxClamp);
+        if (ColorSaturation < 0.5)
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 0);
+        }
+        else
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 1);
+        }
     }
 }

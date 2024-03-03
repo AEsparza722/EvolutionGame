@@ -40,14 +40,18 @@ public class SpawnMagnet : MonoBehaviour
     {
         int lowerLevel = 1;
         int lowerLevelAmount = 0;
-
+                
         for (int j = 0; j < VirusManager.instance.virusData[(VirusManager.instance.virusData.Count) - 1].VirusLevel; j++) //Numero de ejecuciones = Nivel maximo
         {
+            if (lowerLevel == GameManager.instance.maxVirusLevel)
+            {
+                return false;
+            }
             //Obtener lowerlevel
             for (int i = 0; i < VirusManager.instance.transform.childCount; i++)
             {
                 int virusLevel = VirusManager.instance.transform.GetChild(i).GetComponent<CharacterControler>().virusData.VirusLevel;
-
+                
                 if (virusLevel == lowerLevel)
                 {
                     lowerLevelAmount++;
@@ -59,7 +63,6 @@ public class SpawnMagnet : MonoBehaviour
                 }
 
             }
-
             lowerLevel++;
             lowerLevelAmount = 0;
         }

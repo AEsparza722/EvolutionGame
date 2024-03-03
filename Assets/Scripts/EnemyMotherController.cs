@@ -7,6 +7,7 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
 {
 
     float IDamageable.health { get => health; set => health = value; }
+    public float colorSaturation { get => ColorSaturation; set => ColorSaturation = value; }
 
     public static EnemyMotherController instance;
     Vector2 movementDirection;
@@ -30,6 +31,7 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
     [SerializeField] public float health;
     [SerializeField] public float maxHealth;
     [SerializeField] float spawnCooldown;
+    float ColorSaturation;
             
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
@@ -90,7 +92,9 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
                 i--;
             }
         }
-        
+
+        ColorOverLife();
+
 
         //Rotation
         Quaternion rotationDir = Quaternion.Euler(
@@ -186,5 +190,31 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
         rb.AddForce(-movementDirection * (speed * force), ForceMode2D.Impulse);
         yield return new WaitForSeconds(.2f);
     }
+
+    public void ColorOverLife()
+    {
+        ColorSaturation = (health / maxHealth) * 1;
+
+        float maxClamp = Mathf.Clamp(ColorSaturation, .2f, 1f);
+        float colorHue;
+        
+        float colorS;
+        float colorValue;
+        Color.RGBToHSV(meshRenderer.material.GetColor("_AlbedoColor"), out colorHue, out colorS, out colorValue);
+     
+        meshRenderer.material.SetColor("_AlbedoColor", Color.HSVToRGB(colorHue, ColorSaturation, colorValue));
+        meshRenderer.material.SetFloat("_Max", maxClamp);
+        if (ColorSaturation < 0.5)
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 0);
+        }
+        else
+        {
+            meshRenderer.material.SetInt("_UseFresnel", 1);
+        }
+
+    }
+
+    
 
 }
