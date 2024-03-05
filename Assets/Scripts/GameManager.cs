@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Vector2 gameArea;
     [SerializeField] GameObject Map;
     public bool isGameOver = false;
+    public bool isDraggingVirus = false;
     [SerializeField] TMP_Text daysSurvivedText;
     [SerializeField] TMP_Text maxSurvivedText;
     [SerializeField] GameObject gameOverUI;

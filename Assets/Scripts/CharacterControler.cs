@@ -270,6 +270,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     }
     private void OnMouseDown()
     {
+        GameManager.instance.isDraggingVirus = true;
         initialMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         initialObjectPosition = transform.position;
         circleCollider.radius /= 2;
@@ -278,6 +279,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     {
         FusionVirus();                
         FeedMother();
+        GameManager.instance.isDraggingVirus = false;
     }
 
     void FusionVirus()

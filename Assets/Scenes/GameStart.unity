@@ -11195,6 +11195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 870976968}
   - component: {fileID: 870976969}
+  - component: {fileID: 870976970}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -11234,6 +11235,7 @@ MonoBehaviour:
   gameArea: {x: 50, y: 50}
   Map: {fileID: 338139918}
   isGameOver: 0
+  isDraggingVirus: 0
   daysSurvivedText: {fileID: 1558765139}
   maxSurvivedText: {fileID: 599320965}
   gameOverUI: {fileID: 43928181}
@@ -11241,6 +11243,20 @@ MonoBehaviour:
   daysSurvived: 0
   maxDaysSurvived: 0
   maxVirusLevel: 2
+--- !u!114 &870976970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870976967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb97fe307fb97e84c8df01803d4fe898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virusManager: {fileID: 988427727}
+  selectionAreaPrefab: {fileID: 2320751985812807667, guid: 0f4486c509157644983709f129503c93, type: 3}
 --- !u!1 &895993422
 GameObject:
   m_ObjectHideFlags: 0
