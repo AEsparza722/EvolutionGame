@@ -65,6 +65,10 @@ public class MotherController : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        float posX = Mathf.Clamp(transform.position.x, -GameManager.instance.gameArea.x / 2, GameManager.instance.gameArea.x / 2);
+        float posY = Mathf.Clamp(transform.position.y, -GameManager.instance.gameArea.y / 2, GameManager.instance.gameArea.y / 2);
+        transform.position = new Vector2(posX, posY);
+
         spawnObjects[0].transform.parent.gameObject.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
 
         if (canChangeDirection && canMove)

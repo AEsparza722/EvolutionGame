@@ -8,6 +8,7 @@ public class MultiSelect : MonoBehaviour
     [SerializeField] GameObject virusManager;
     [SerializeField] GameObject selectionAreaPrefab;
     GameObject selectionArea;
+    [SerializeField] List<GameObject> virusSelected;
 
     private void Awake()
     {
@@ -22,7 +23,11 @@ public class MultiSelect : MonoBehaviour
             
             if (Input.GetMouseButtonDown(0))
             {
-            
+                foreach (GameObject virus in virusSelected) 
+                {
+                    virus.transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
+                }
+                virusSelected.Clear();                
                 selectionArea.SetActive(true);
                 initialPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 selectionArea.transform.position = initialPosition;
@@ -52,10 +57,38 @@ public class MultiSelect : MonoBehaviour
                     virusPosition.y <= upperRightPosition.y
                     )
                 {
-                    Debug.Log(virusManager.transform.GetChild(i).name);
+                    virusSelected.Add(virusManager.transform.GetChild(i).gameObject);
+                    virusManager.transform.GetChild(i).GetChild(2).GetChild(1).gameObject.SetActive(true);
                 }
             }
 
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (virusSelected.Count > 0)
+            {
+                Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+
+                foreach (GameObject virus in virusSelected)
+                {
+                    virus.GetComponent<CharacterControler>().MoveSelection(clickPosition);
+                    virus.transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
+                }
+                
+                virusSelected.Clear();
+                
+            }
+        }
+
+        for (int i = 0; i < virusSelected.Count; i++)
+        {
+            if (virusSelected[i] == null)
+            {
+                virusSelected.RemoveAt(i);
+                i--;
+            }
         }
     }
 }

@@ -56,6 +56,10 @@ public class EnemyVirus : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        float posX = Mathf.Clamp(transform.position.x, -GameManager.instance.gameArea.x / 2, GameManager.instance.gameArea.x / 2);
+        float posY = Mathf.Clamp(transform.position.y, -GameManager.instance.gameArea.y / 2, GameManager.instance.gameArea.y / 2);
+        transform.position = new Vector2(posX, posY);
+
         if (canChangeDirection && canMove)
         {
             StartCoroutine(MoveCharacter());

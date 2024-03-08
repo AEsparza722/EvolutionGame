@@ -23,6 +23,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     public bool isMagnet;   
     bool canAttack = true;
     bool isAttacking = false;
+    public bool isMoveSelection = false;
     public VirusData virusData;
     [SerializeField] ParticleSystem fusionParticle;
     [SerializeField] TMP_Text coinsText;
@@ -31,6 +32,7 @@ public class CharacterControler : MonoBehaviour, IDamageable
     [SerializeField] VirusAreaDetection virusDetectionRadius;
     [SerializeField] float setDetectionRadius;
     [SerializeField] TMP_Text maxLevelText;
+    Vector2 clickPosition;
     
 
     Color defaultColor;
@@ -62,12 +64,16 @@ public class CharacterControler : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (canChangeDirection && canMove)
+        float posX = Mathf.Clamp(transform.position.x, -GameManager.instance.gameArea.x / 2, GameManager.instance.gameArea.x / 2);
+        float posY = Mathf.Clamp(transform.position.y, -GameManager.instance.gameArea.y / 2, GameManager.instance.gameArea.y / 2);
+        transform.position = new Vector2(posX, posY);
+
+        if (canChangeDirection && canMove && !isMoveSelection)
         {
             StartCoroutine(MoveCharacter());
         }
 
-        if(virusDetectionRadius.bossDetected.Count > 0 && !isMagnet)
+        if(virusDetectionRadius.bossDetected.Count > 0 && !isMagnet && !isMoveSelection)
         {
             Debug.DrawRay(transform.position, virusDetectionRadius.GetNearbyEnemy().transform.position - transform.position);            
             canMove = false;
@@ -77,6 +83,18 @@ public class CharacterControler : MonoBehaviour, IDamageable
         if (canIncreaseCoins)
         {
             StartCoroutine(DropCoins());
+        }
+
+        if (isMoveSelection)
+        {
+            movementDirection = (clickPosition - (Vector2)transform.position).normalized;
+            rb.velocity = Vector2.zero;
+            rb.AddForce(movementDirection * virusData.Speed * speedMultiplier, ForceMode2D.Impulse);
+
+            if(Vector2.Distance(transform.position, clickPosition) < 3)
+            {
+                isMoveSelection = false;
+            }
         }
          
         //Rotation
@@ -412,5 +430,11 @@ public class CharacterControler : MonoBehaviour, IDamageable
         {
             meshRenderer.material.SetInt("_UseFresnel", 1);
         }
+    }
+
+    public void MoveSelection(Vector2 clickPosition)
+    {
+        isMoveSelection = true;        
+        this.clickPosition = clickPosition;
     }
 }
