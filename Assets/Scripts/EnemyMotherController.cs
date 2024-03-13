@@ -24,7 +24,7 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
     public List<GameObject> spawnObjects = new List<GameObject>();
     [SerializeField] GameObject childEnemy;
     [SerializeField] List<GameObject> childCount = new List<GameObject>();
-    [SerializeField] int maxChildren;
+    int maxChildren;
 
 
     [SerializeField] float speed;
@@ -32,21 +32,14 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
     [SerializeField] public float maxHealth;
     [SerializeField] float spawnCooldown;
     float ColorSaturation;
+    public int currentLevel;
             
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float rotationMultiplier = 500f;
 
     private void Awake()
     {        
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
+    
         circleCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -66,6 +59,8 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
         float posX = Mathf.Clamp(transform.position.x, -GameManager.instance.gameArea.x / 2, GameManager.instance.gameArea.x / 2);
         float posY = Mathf.Clamp(transform.position.y, -GameManager.instance.gameArea.y / 2, GameManager.instance.gameArea.y / 2);
         transform.position = new Vector2(posX, posY);
+
+        maxChildren = 2 + currentLevel;
 
         if (canChangeDirection && canMove)
         {
@@ -142,7 +137,8 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
 
         if (health <= 0)
         {            
-            Destroy(gameObject);
+            EnemySystem.instance.IncreaseKilledMothers();
+            Destroy(gameObject);            
         }
     }
 
@@ -161,7 +157,10 @@ public class EnemyMotherController : MonoBehaviour, IDamageable
                 continue;
             }
 
-            childCount.Add(Instantiate(childEnemy, obj.transform.position, Quaternion.identity));
+            GameObject enemyVirusInstance = Instantiate(childEnemy, obj.transform.position, Quaternion.identity);
+            enemyVirusInstance.GetComponent<EnemyVirus>().virusData = VirusManager.instance.virusData[currentLevel - 1];
+            enemyVirusInstance.GetComponent<EnemyVirus>().UpdateVirusData();
+            childCount.Add(enemyVirusInstance);
             yield return new WaitForSeconds(.5f);
             if (childCount.Count >= maxChildren) break;
 

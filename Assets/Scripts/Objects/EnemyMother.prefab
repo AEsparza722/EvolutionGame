@@ -5548,5 +5548,6 @@ MonoBehaviour:
   health: 200
   maxHealth: 200
   spawnCooldown: 10
+  currentLevel: 1
   rotationSpeed: 10
   rotationMultiplier: 500

@@ -22,6 +22,7 @@ public class EnemyVirus : MonoBehaviour, IDamageable
     public VirusData virusData;
     [SerializeField] ParticleSystem fusionParticle;
     public float health;
+    float maxHealth;
     MeshRenderer meshRenderer;
     [SerializeField] EnemyMotherDetection normalVirusDetectionRadius;
     [SerializeField] float setDetectionRadius;
@@ -52,6 +53,8 @@ public class EnemyVirus : MonoBehaviour, IDamageable
     {
         UpdateVirusData();
         defaultColor = meshRenderer.material.GetColor("_FresnelColor");
+        maxHealth = virusData.Health / 3;
+        health = maxHealth;
     }
 
     private void Update()
@@ -257,7 +260,7 @@ public class EnemyVirus : MonoBehaviour, IDamageable
 
     public void ColorOverLife()
     {
-        ColorSaturation = (health / virusData.Health) * 1;
+        ColorSaturation = (health / maxHealth) * 1;
 
         float maxClamp = Mathf.Clamp(ColorSaturation, .2f, 1f);
         float colorHue;
@@ -277,4 +280,6 @@ public class EnemyVirus : MonoBehaviour, IDamageable
             meshRenderer.material.SetInt("_UseFresnel", 1);
         }
     }
+
+
 }

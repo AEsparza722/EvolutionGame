@@ -6,8 +6,8 @@ using Cinemachine;
 public class CameraController : MonoBehaviour
 {
     float zoomSpeed = 1.5f;
-    float zoomMin = 11;
-    float zoomMax = 7;
+    float zoomMin = 11.8f;
+    float zoomMax = 11.8f;
     CinemachineVirtualCamera virtualCamera;
 
     float moveSpeed;
@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        ZoomCamera();
+        //ZoomCamera();
         MoveCamera();
     }
 
