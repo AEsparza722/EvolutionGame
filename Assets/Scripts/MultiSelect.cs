@@ -5,10 +5,12 @@ using UnityEngine;
 public class MultiSelect : MonoBehaviour
 {
     Vector2 initialPosition;
+    [SerializeField] GameObject clickIndicator;
     [SerializeField] GameObject virusManager;
     [SerializeField] GameObject selectionAreaPrefab;
     GameObject selectionArea;
     [SerializeField] List<GameObject> virusSelected;
+    
 
     private void Awake()
     {
@@ -69,7 +71,7 @@ public class MultiSelect : MonoBehaviour
             if (virusSelected.Count > 0)
             {
                 Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+                StartCoroutine(ClickIndicator(clickPosition));
 
                 foreach (GameObject virus in virusSelected)
                 {
@@ -90,5 +92,13 @@ public class MultiSelect : MonoBehaviour
                 i--;
             }
         }
+    }
+
+    IEnumerator ClickIndicator(Vector2 clickPosition)
+    {        
+        clickIndicator.transform.position = clickPosition;
+        clickIndicator.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        clickIndicator.SetActive(false);
     }
 }
